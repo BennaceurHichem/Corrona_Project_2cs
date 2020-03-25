@@ -116,7 +116,7 @@ export default function SignupForm() {
                       autoFocus
                       variant="outlined"
                       error={false}
-           helperText=""
+                      helperText=""
                     />
                   </div>
 
@@ -133,7 +133,8 @@ export default function SignupForm() {
                       autoComplete="email"
                       autoFocus
                       error={false}
-                     helperText=""
+                       helperText=""
+                     
                     />
                   </div>
                   <div className="form-group">
@@ -148,7 +149,7 @@ export default function SignupForm() {
                       label="Password"
                       autoFocus
                       error={false}
-           helperText=""
+                       helperText=""
                     />
                   </div>
                   <div className="form-group">
@@ -162,6 +163,8 @@ export default function SignupForm() {
                       id="confirmPassword"
                       label="password Confirmation"
                       autoFocus
+                      error={false}
+                       helperText=""
                     />
                   </div>
                   <div className="form-group">
@@ -176,7 +179,7 @@ export default function SignupForm() {
                       variant="outlined"
                       required
                       error={false}
-           helperText=""
+                       helperText=""
                     />
                   </div>
                 </Grid>

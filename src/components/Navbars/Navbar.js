@@ -18,9 +18,17 @@ import styles from "assets/jss/material-dashboard-react/components/headerStyle.j
 
 const useStyles = makeStyles(styles);
 
+
+
+//routes prp is passed by the Admin component to the navBar to redirect ton each page 
+
+//rtlName is a part of the route.js eleemtns  
+//rtlName (name of your route - this will appear in the Sidebar and Navbar components 
 export default function Header(props) {
   const classes = useStyles();
   function makeBrand() {
+
+    //
     var name;
     props.routes.map(prop => {
       if (window.location.href.indexOf(prop.layout + prop.path) !== -1) {
@@ -30,11 +38,17 @@ export default function Header(props) {
     });
     return name;
   }
+
+
+  
   const { color } = props;
   const appBarClasses = classNames({
     [" " + classes[color]]: color
   });
   return (
+
+
+    
     <AppBar className={classes.appBar + appBarClasses}>
       <Toolbar className={classes.container}>
         <div className={classes.flex}>

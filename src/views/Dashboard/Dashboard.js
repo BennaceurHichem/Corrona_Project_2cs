@@ -28,6 +28,7 @@ import CardHeader from "components/Card/CardHeader.js";
 import CardIcon from "components/Card/CardIcon.js";
 import CardBody from "components/Card/CardBody.js";
 import CardFooter from "components/Card/CardFooter.js";
+import Grid from '@material-ui/core/Grid';
 
 import { bugs, website, server } from "variables/general.js";
 
@@ -37,28 +38,31 @@ import {
   completedTasksChart
 } from "variables/charts.js";
 
-
-
 import styles from "assets/jss/material-dashboard-react/views/dashboardStyle.js";
 
-//Editor Component 
-import Editor from 'components/MyComponents/Editor'
-//auth0 
+//Editor Component
+import Editor from "components/MyComponents/Editor";
+//auth0
 import { useAuth0 } from "../../react-auth0-spa";
-
 
 const useStyles = makeStyles(styles);
 
 export default function Dashboard() {
   const classes = useStyles();
-  const { isAuthenticated, loginWithRedirect, logout } = useAuth0();
   return (
     <div>
+      <Grid xs={12}>
+      <iframe
+              scrolling="no"
+              frameborder="0"
+              allowfullscreen=""
+              style={{ border: "none", width: "600px", height: "500px",marginRight:"50%" }}
+              src="https://e.infogram.com/8871bbdc-b9d7-45bd-a759-50f96ac3e073?parent_url=https%3A%2F%2Fwww.aljazeera.com%2Fnews%2F2020%2F01%2Fcountries-confirmed-cases-coronavirus-200125070959786.html&amp;src=embed#async_embed"
+              title="مناطق  انتشار كورونا حول العالم"
+            ></iframe>
+      </Grid>
 
-       
-      <GridContainer>
-
-        
+      {/*<GridContainer>
         <GridItem xs={12} sm={6} md={3}>
           <Card>
             <CardHeader color="warning" stats icon>
@@ -134,6 +138,8 @@ export default function Dashboard() {
           </Card>
         </GridItem>
       </GridContainer>
+      */}
+      
       <GridContainer>
         <GridItem xs={12} sm={12} md={4}>
           <Card chart>
@@ -273,14 +279,14 @@ export default function Dashboard() {
           </Card>
         </GridItem>
       </GridContainer>
-   
-                  {/*  Editor component of text  */}
-                <Editor />
 
-                <div>
-            <button onClick={() =>logout()}>Log out</button>
-        </div>
-    {/*  Editor component of text withDraft.js  */}
+                  <Grid>
+                        {/*  Editor component of text  */}
+                        <Editor />
+                  </Grid>
+    
+
+     
     </div>
   );
 }

@@ -25,7 +25,12 @@ export default function Sidebar(props) {
   function activeRoute(routeName) {
     return window.location.href.indexOf(routeName) > -1 ? true : false;
   }
+
+  //props given by the parent component 
   const { color, logo, image, logoText, routes } = props;
+
+
+
   var links = (
     <List className={classes.list}>
       {routes.map((prop, key) => {
@@ -80,10 +85,12 @@ export default function Sidebar(props) {
       })}
     </List>
   );
+
+  
   var brand = (
     <div className={classes.logo}>
       <a
-        href="https://www.creative-tim.com?ref=mdr-sidebar"
+        
         className={classNames(classes.logoLink, {
           [classes.logoLinkRTL]: props.rtlActive
         })}

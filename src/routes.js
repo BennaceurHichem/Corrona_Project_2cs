@@ -35,7 +35,8 @@ import NotificationsPage from "views/Notifications/Notifications.js";
 import UpgradeToPro from "views/UpgradeToPro/UpgradeToPro.js";
 // core components/views for RTL layout
 import RTLPage from "views/RTLPage/RTLPage.js";
-
+import VideoLibraryIcon from '@material-ui/icons/VideoLibrary';
+import TheatersIcon from '@material-ui/icons/Theaters';
 const dashboardRoutes = [
   {
     path: "/dashboard",
@@ -53,38 +54,38 @@ const dashboardRoutes = [
     component: UserProfile,
     layout: "/admin"
   },
-  {
-    path: "/table",
-    name: "Table List",
-    rtlName: "قائمة الجدول",
-    icon: "content_paste",
+{
+    path: "/videos",
+    name: "Videos Reçus",
+    rtlName:" الفيديوهات ",
+    icon: TheatersIcon,
     component: TableList,
     layout: "/admin"
   },
-  {
+  /*{
     path: "/typography",
     name: "Typography",
-    rtlName: "طباعة",
+    rtlName: "الخطوط",
     icon: LibraryBooks,
     component: Typography,
     layout: "/admin"
-  },
-  {
+  },*/
+ /* {
     path: "/icons",
     name: "Icons",
     rtlName: "الرموز",
     icon: BubbleChart,
     component: Icons,
     layout: "/admin"
-  },
-  {
+  },*/
+  /*{
     path: "/maps",
     name: "Maps",
     rtlName: "خرائط",
     icon: LocationOn,
     component: Maps,
     layout: "/admin"
-  },
+  }*/,
   {
     path: "/notifications",
     name: "Notifications",
@@ -101,7 +102,7 @@ const dashboardRoutes = [
     component: RTLPage,
     layout: "/rtl"
   },
-  {
+ /* {
     path: "/upgrade-to-pro",
     name: "Upgrade To PRO",
     rtlName: "التطور للاحترافية",
@@ -109,6 +110,7 @@ const dashboardRoutes = [
     component: UpgradeToPro,
     layout: "/admin"
   }
+  */
 ];
 
 export default dashboardRoutes;

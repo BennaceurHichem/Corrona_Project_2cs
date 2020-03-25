@@ -16,7 +16,7 @@ import routes from "./node_modules/routes.js.js.js";
 import styles from "./node_modules/assets/jss/material-dashboard-react/layouts/adminStyle.js.js.js";
 
 import bgImage from "./node_modules/assets/img/sidebar-2.jpg";
-import logo from "./node_modules/assets/img/reactlogo.png";
+import logo from "assets/img/coronaWatchLogo.png";
 
 let ps;
 
@@ -94,16 +94,7 @@ export default function Admin({ ...rest }) {
   }, [mainPanel]);
   return (
     <div className={classes.wrapper}>
-      <Sidebar
-        routes={routes}
-        logoText={"Creative Tim"}
-        logo={logo}
-        image={image}
-        handleDrawerToggle={handleDrawerToggle}
-        open={mobileOpen}
-        color={color}
-        {...rest}
-      />
+     
       <div className={classes.mainPanel} ref={mainPanel}>
         <Navbar
           routes={routes}
@@ -119,14 +110,7 @@ export default function Admin({ ...rest }) {
           <div className={classes.map}>{switchRoutes}</div>
         )}
         {getRoute() ? <Footer /> : null}
-        <FixedPlugin
-          handleImageClick={handleImageClick}
-          handleColorClick={handleColorClick}
-          bgColor={color}
-          bgImage={image}
-          handleFixedClick={handleFixedClick}
-          fixedClasses={fixedClasses}
-        />
+      
       </div>
     </div>
   );
