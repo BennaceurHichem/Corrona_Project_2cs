@@ -1,3 +1,4 @@
+
 import React from "react";
 import MainPage from "./components/Login/MainPage";
 import { useAuth0 } from "./react-auth0-spa";
@@ -10,19 +11,31 @@ import QuillEditor from 'components/MyComponents/QuillEditor'
 import CardVideo from 'components/Card/CardVideo'
 import Table from 'components/Tables/Table'
 import Admin from "layouts/Admin";
+import MyMap from 'components/Map/MyMap'
+import Map from 'components/Map/Map'
+
+
 function App() {
-//  const { loading } = useAuth0();
+ const { loading } = useAuth0();
+ const { isAuthenticated, loginWithRedirect, logout } = useAuth0();
 
+ if (loading) {
+  return <div>Loading...</div>;
+}
 
-  return (
-    <div>
-     
+return (
+  <div className="App">
+     <div>
+      {!isAuthenticated && (
+        <button onClick={() => loginWithRedirect({})}>Log in</button>
+      )}
 
-    
-     <Admin />
-
+      {isAuthenticated && <button onClick={() => logout()}>Log out</button>}
     </div>
-  );
+
+    <p>this is an auth Navbar </p>
+  </div>
+);
 }
 
 export default App;

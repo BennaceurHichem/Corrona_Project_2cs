@@ -30,6 +30,7 @@ import { Auth0Provider } from "./react-auth0-spa";
 import config from "./auth_config.json";
 
 import App from "./App";
+import CoronaApp from "./CoronaApp";
 
 const hist = createBrowserHistory();
 // A function that routes the user to the right place
@@ -43,11 +44,17 @@ const onRedirectCallback = appState => {
 };
 
 ReactDOM.render(
+  <Auth0Provider
+      domain={config.domain}
+      client_id={config.clientId}
+      redirect_uri={window.location.origin}
+      onRedirectCallback={onRedirectCallback}
+    >
   <Router history={hist}>
+    <App />
+  </Router>
   
-      <App />
- 
-  </Router>,
+  </Auth0Provider>,
   document.getElementById("root")
 );
 
@@ -65,8 +72,7 @@ ReactDOM.render(
 
 
 */
-
-/*
+  /*
 
   <Auth0Provider
       domain={config.domain}

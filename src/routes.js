@@ -37,6 +37,7 @@ import UpgradeToPro from "views/UpgradeToPro/UpgradeToPro.js";
 import RTLPage from "views/RTLPage/RTLPage.js";
 import VideoLibraryIcon from '@material-ui/icons/VideoLibrary';
 import TheatersIcon from '@material-ui/icons/Theaters';
+import VideosList from 'views/VideosList/VideosList'
 const dashboardRoutes = [
   {
     path: "/dashboard",
@@ -59,7 +60,7 @@ const dashboardRoutes = [
     name: "Videos Reçus",
     rtlName:" الفيديوهات ",
     icon: TheatersIcon,
-    component: TableList,
+    component: VideosList,
     layout: "/admin"
   },
   /*{
