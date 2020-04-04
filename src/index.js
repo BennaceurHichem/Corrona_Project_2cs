@@ -22,6 +22,7 @@ import { Router, Route, Switch, Redirect } from "react-router-dom";
 
 // core components
 import Admin from "layouts/Admin.js";
+import Dashboard from "views/Dashboard/Dashboard";
 import RTL from "layouts/RTL.js";
 
 import "assets/css/material-dashboard-react.css?v=1.8.0";
@@ -31,12 +32,13 @@ import config from "./auth_config.json";
 
 import App from "./App";
 import CoronaApp from "./CoronaApp";
+import history from './history'
+import AccessComponent from 'components/Login/AccessComponent'
 
-const hist = createBrowserHistory();
 // A function that routes the user to the right place
 // after login
 const onRedirectCallback = appState => {
-  hist.push(
+  history.push(
     appState && appState.targetUrl
       ? appState.targetUrl
       : window.location.pathname
@@ -44,17 +46,20 @@ const onRedirectCallback = appState => {
 };
 
 ReactDOM.render(
-  <Auth0Provider
-      domain={config.domain}
-      client_id={config.clientId}
-      redirect_uri={window.location.origin}
-      onRedirectCallback={onRedirectCallback}
-    >
-  <Router history={hist}>
-    <App />
+ 
+  <Router history={history}>
+   
+    <Switch>
+      <Route path="/admin" component={Admin} />
+      <Route path="/rtl" component={RTL} />
+      
+
+    </Switch>
+    <Route exact path="/login" component={AccessComponent} />
+    <Route exact path="/" component={App} />
   </Router>
   
-  </Auth0Provider>,
+  ,
   document.getElementById("root")
 );
 

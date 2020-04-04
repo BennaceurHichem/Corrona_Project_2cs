@@ -68,15 +68,14 @@ export default function LoginForm() {
             .required(""),
 
           password: Yup.string()
-            .min(6, "Password must be at least 6 characters")
-            .required("")
+           
+            .required("fill your password to authnticate")
         })}
         onSubmit={fields => {
           alert("SUCCESS!! :-)\n\n" + JSON.stringify(fields, null, 4));
         }}
         render={({ status, touched, errors }) => (
           <div className={classes.paper}>
-            <img src={Logo} style={{ width: "100px", height: "100px" }} />
 
             <Typography component="h1" variant="h5">
               Sign in
@@ -114,7 +113,7 @@ export default function LoginForm() {
                       required
                       id="password"
                       label="Password"
-                      autoFocus
+                      
                     />
                   </div>
                 </Grid>

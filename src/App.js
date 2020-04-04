@@ -6,6 +6,8 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import GridContainer from "components/Grid/GridContainer.js";
 import SignupForm from 'components/Login/SignupForm'
 import LoginForm from 'components/Login/LoginForm'
+import Signup from 'components/Login/Signup'
+
 import DraftEditor from 'components/MyComponents/DraftEditor'
 import QuillEditor from 'components/MyComponents/QuillEditor'
 import CardVideo from 'components/Card/CardVideo'
@@ -13,28 +15,19 @@ import Table from 'components/Tables/Table'
 import Admin from "layouts/Admin";
 import MyMap from 'components/Map/MyMap'
 import Map from 'components/Map/Map'
-
+import AccessComponent from 'components/Login/AccessComponent'
 
 function App() {
- const { loading } = useAuth0();
- const { isAuthenticated, loginWithRedirect, logout } = useAuth0();
-
- if (loading) {
-  return <div>Loading...</div>;
-}
-
+ 
 return (
   <div className="App">
-     <div>
-      {!isAuthenticated && (
-        <button onClick={() => loginWithRedirect({})}>Log in</button>
-      )}
-
-      {isAuthenticated && <button onClick={() => logout()}>Log out</button>}
-    </div>
-
-    <p>this is an auth Navbar </p>
+    
+        <MainPage />
+        
   </div>
+
+
+
 );
 }
 

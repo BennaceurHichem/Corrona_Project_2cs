@@ -24,6 +24,10 @@ import { FormikTextField, FormikSelectField } from "formik-material-fields";
 import Icon from "@material-ui/core/Icon";
 import Logo from "assets/img/coronaWatchLogo.png";
 
+
+//this css file is necessary for the texterror label of material ui to make the message above the textField Directly 
+
+import './login.css'
 const useStyles = makeStyles(theme => ({
   paper: {
     marginTop: theme.spacing(8),
@@ -67,12 +71,12 @@ export default function SignupForm() {
           poste: ""
         }}
         validationSchema={Yup.object().shape({
-          firstName: Yup.string().required(""),
+          fullname: Yup.string().required("please fill your full name "),
 
           email: Yup.string()
             .email("Email is invalid")
             .required(""),
-          poste: Yup.string().required(""),
+          poste: Yup.string().required("choose your own poste"),
           password: Yup.string()
             .min(6, "Password must be at least 6 characters")
             .required(""),
@@ -85,7 +89,7 @@ export default function SignupForm() {
         }}
         render={({ status, touched, errors }) => (
           <div className={classes.paper}>
-            <img src={Logo} style={{ width: "100px", height: "100px" }} />
+           
 
             <Typography component="h1" variant="h5">
               Sign in
@@ -105,18 +109,17 @@ export default function SignupForm() {
                   <div className="form-group">
                     <FormikTextField
                       as={TextField}
-                      name="firstName"
+                      name="fullname"
                       type="text"
                       autoFocus
                       margin="normal"
-                      id="firstName"
-                      label="First name"
-                      name="firstName"
+                      id="fullname"
+
                       autoComplete="firstName"
-                      autoFocus
                       variant="outlined"
                       error={false}
                       helperText=""
+                  
                     />
                   </div>
 
@@ -131,7 +134,7 @@ export default function SignupForm() {
                       id="email"
                       label="Email Address"
                       autoComplete="email"
-                      autoFocus
+                      
                       error={false}
                        helperText=""
                      
@@ -147,7 +150,7 @@ export default function SignupForm() {
                       required
                       id="password"
                       label="Password"
-                      autoFocus
+                      
                       error={false}
                        helperText=""
                     />
@@ -162,9 +165,9 @@ export default function SignupForm() {
                       required
                       id="confirmPassword"
                       label="password Confirmation"
-                      autoFocus
+                      
                       error={false}
-                       helperText=""
+                      helperText=""
                     />
                   </div>
                   <div className="form-group">
@@ -176,6 +179,7 @@ export default function SignupForm() {
                         { label: "agent_sante", value: "agent_sante" }
                       ]}
                       label="Poste"
+                      id="poste"
                       variant="outlined"
                       required
                       error={false}
