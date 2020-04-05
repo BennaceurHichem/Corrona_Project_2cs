@@ -79,7 +79,7 @@ class Map extends Component{
 	 */
 	getCity = ( addressArray ) => {
 		let city = '';
-		for( let i = 0; i < addressArray.length; i++ ) {
+		for( let i = 0; i < addressArray ?addressArray.length :0 ; i++ ) {
 			if ( addressArray[ i ].types[0] && 'administrative_area_level_2' === addressArray[ i ].types[0] ) {
 				city = addressArray[ i ].long_name;
 				return city;

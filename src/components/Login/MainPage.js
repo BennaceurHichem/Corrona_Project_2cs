@@ -59,7 +59,7 @@ class  MainPage extends React.Component  {
               justify="center"
               direction="column"
             >
-              <div id="container"  style={{ justifyContent: "center" ,marginLeft:"30%",marginBottom:'80px'}}>
+              <div id="container"    style={{ justifyContent: "center" ,marginLeft:"30%",marginBottom:'80px'}}>
             
               <Button
                 onClick={this.handleClick.bind(this)}
