@@ -17,6 +17,9 @@ import MyMap from 'components/Map/MyMap'
 import Map from 'components/Map/Map'
 import CoronaApp from './CoronaApp'
 import AccessComponent from 'components/Login/AccessComponent'
+import AgentForm from 'components/AgentForm/AgentForm'
+
+import Dashboard from 'views/Dashboard/Dashboard'
 import data_wilayas from 'alger_data.json';
 
 class App extends React.Component {
@@ -65,7 +68,7 @@ getAllWilaya(data) {
   return (
     <div className="App">
       
-  <CoronaApp />
+  <AgentForm />
           
     </div>
   

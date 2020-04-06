@@ -7,7 +7,7 @@ import DeathsDisplay from "components/CoronaAPI/DeathsDisplay";
 import CountrySearch from "components/CoronaAPI/CountrySearch";
 import CountryDisplay from "components/CoronaAPI/CountryDisplay";
 
-import "./styleapi.css";
+
 
 export default class App extends Component {
   constructor(props) {
