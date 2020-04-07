@@ -15,10 +15,15 @@ import CardFooter from "components/Card/CardFooter.js";
 import { withStyles } from "@material-ui/styles";
 import TextField from "@material-ui/core/TextField";
 import avatar from "assets/img/faces/marc.jpg";
+import Grid from "@material-ui/core/Grid";
+import FormControl from '@material-ui/core/FormControl';
 
 import data_wilayas from "alger_data.json";
 import wilayas from "./wilayas.json";
 import Autocomplete from "@material-ui/lab/Autocomplete";
+import { get } from 'lodash'   
+import Table from 'components/Table/Table'
+import MaterialTable from 'material-table';
 
 const styles = {
   cardCategoryWhite: {
@@ -46,81 +51,74 @@ class AgentForm extends React.Component {
     super(props);
     //all commune by wilayas and each commune have nb persone touches
     /*
-        one object created wilayas_commune
-        {
-            wilayas : nom_wilayas,
-            lat_wilaya: 0,
-                lng_wilaya: 0,
-            commune : {
-                {
-                      nom_commune: nom,
-                      nbrecovered: 0,
-                      lat: x,
-                      lng:y,
-                      nbDeath: 0,
-                      nbCase: 0,
-                      nbgueris: 0,
+            one object created wilayas_commune
+            {
+                wilayas : nom_wilayas,
+                lat_wilaya: 0,
+                    lng_wilaya: 0,
+                commune : {
+                    {
+                          nom_commune: nom,
+                          nbrecovered: 0,
+                          lat: x,
+                          lng:y,
+                          nbDeath: 0,
+                          nbCase: 0,
+                          nbgueris: 0,
 
-                },
-                {
-                      nom_commune: nom,
-                      lat: x,
-                      lng:y,
-                      nbrecovered: 0,
-                      nbDeath: 0,
-                      nbCase: 0,
-                      nbgueris: 0,
-                },
-                    .
-                    .
-                    .
+                    },
+                    {
+                          nom_commune: nom,
+                          lat: x,
+                          lng:y,
+                          nbrecovered: 0,
+                          nbDeath: 0,
+                          nbCase: 0,
+                          nbgueris: 0,
+                    },
+                        .
+                        .
+                        .
 
 
+                }
             }
-        }
 
 
-        */
+            */
 
     // Don't call this.setState() here!
     const allCommune = data_wilayas.map((item) => item);
     const allWilayas = wilayas.map((item) => item);
     console.log(allWilayas);
     this.state = {
+      data:[],
       all_commune: allCommune,
       all_wilayas: allWilayas,
       choosedWilaya: "",
       choosedWilayaNumber: 0,
+      //this will be used when the user start picking their commune where he couldn't change the wilayas until he delete all communes
+      is_wilayasdisabled: false,
+      nbRecovered: 0,
+      nbDeath: 0,
+      nbCase: 0,
+      nbGueris: 0,
       wilayas_communes: [
-        {
-          wilaya: "invalid_wilaya",
-          lat_wilaya: 0,
-          lng_wilaya: 0,
-          communes: [
-            {
-              nom_commune: "",
-              lat: 0,
-              lng: 0,
-              nbrecovered: 0,
-              nbDeath: 0,
-              nbCase: 0,
-              nbgueris: 0,
-            },
-          ],
-        },
+      
+        
       ],
     };
   }
 
   componentDidMount() {
     /*0:
-        longitude: -0.1869644
-        latitude: 27.9716342
-        nom: "Adrar"
-        id: "1"
-        wilaya_id: "1"
-        code_postal: "01001"
-        */
+            longitude: -0.1869644
+            latitude: 27.9716342
+            nom: "Adrar"
+            id: "1"
+            wilaya_id: "1"
+            code_postal: "01001"
+            */
 
     const wilayasSearch = this.findCommuneByWilayas(
       this.state.wilayas_communes,
@@ -129,7 +127,6 @@ class AgentForm extends React.Component {
     const ids = data_wilayas.map((item) => item.id);
     const communeName = data_wilayas.map((item) => item.nom);
 
-    console.log(this.state.wilayas_communes[0]["communes"]);
   }
 
   //get all commune of a specific wilayas
@@ -139,66 +136,140 @@ class AgentForm extends React.Component {
     });
   }
   handleChoixWilayas = (e, value, reason) => {
-    /*
- commune :  arr.indexOf("bob") > -1 ? this.state.wilayas_communes[0]["communes"].push({
-                                                        nom_commune: '',
-                                                        lat: 0,
-                                                        lng:0,
-                                                        nbrecovered: 0,
-                                                        nbDeath: 0,
-                                                        nbCase: 0,
-                                                        nbgueris: 0,})
 
-    */
-
-    console.log("event" + Object.keys(value));
+    /*console.log("event" + Object.keys(value));
     console.log("initial state: " + this.state.wilayas_communes.length);
     console.log("reason" + reason);
+    console.log("this.state.wilayas_commune.wilaya = " + this.state.wilayas_communes);
+    */
+ 
+
 
     this.setState((prevState) => ({
       choosedWilaya: value ? value.nom : "invalid",
-      choosedWilayaNumber:value.code,
-      wilayas_communes: prevState.wilayas_communes.concat({
-        wilaya: value ? value.nom : "invalid",
-        lat_wilaya: value.lat,
-        lng_wilaya: value.lng,
-        communes: {},
-      }),
+      choosedWilayaNumber: value.code,
+      //if not exist insert 
+      wilayas_communes:  prevState.wilayas_communes.concat(value) ,
     }));
 
-    console.log(
-      "updated state: " + this.state.wilayas_communes.map((item) => item.wilaya)
-    );
+   
   };
 
-
-
-
   handleChoixCommune = (e, value, reason) => {
+    console.log("commune onchange  e : " + e);
+    console.log("commune onchange  value : " + value);
+    console.log("commune onchange  reason : " + reason);
+  if(value !== null){
 
-    console.log("commune onchange  e : "+e)
-    console.log("commune onchange  value : "+value)
-    console.log("commune onchange  reason : "+reason)
+    console.log("when the value is different to null ")
+      this.setState((prevState)=>(
+          
+        {
+          ...prevState,
+          is_wilayasdisabled:true,
+          wilayas_communes:{
+                ...prevState.wilayas_communes,
+                
+                 
+                  communes: value,
+                
+          }
+          
+              
+          
 
-
-
+      }))
 
   }
+
+  if(reason==="clear"){
+      this.setState({
+          is_wilayasdisabled:false
+      })
+  }
+
+
+  };
   //get all commune of a specific wilayas
   getAllWilaya(data) {
     return data.filter((element) => {
       return element.wilaya_id;
     });
   }
-  getOptionSelected = (e) => {
-    console.log("the selected option" + e);
-  };
+ 
+
+
+//handle all numbers chage and store them in the state 
+handleNbCases = (e)=>{
+
+    console.log("value cases"+e.target.value)
+    const num = e.target.value;
+        this.setState((prevState)=>({
+          nbCase:num,
+
+           
+        }))
+
+}
+handleNbRecovered = (e)=>{
+
+
+    console.log("value Recovered"+e.target.value)
+    const num = e.target.value;
+    this.setState({
+
+        nbRecovered:num,
+    })
+
+    
+}
+handleNbGueris = (e)=>{
+
+    console.log("value Gueris"+e.target.value)
+    const num = e.target.value;
+    this.setState({
+
+        nbGueris:num,
+    })
+    
+}
+
+handleNbDeaths= (e)=>{
+
+    console.log("value death"+e.target.value)
+    const num = e.target.value;
+    this.setState({
+
+        nbDeath:num,
+    })
+}
+
+
+
+addWilayaToData = (e)=>{
+
+  const data = this.state.data
+  console.log("event "+e.target.value)
+ 
+
+
+/*  data[data.length-1] ={
+    wilaya: value
+  } 
+    this.setState((prevState)=>({
+      data: data
+    
+    }))*/
+    
+
+
+}
 
   render() {
     const { classes } = this.props;
     return (
       <div>
-        <GridContainer>
+        <Grid>
           <GridItem xs={12} sm={12} md={8}>
             <Card>
               <CardHeader color="primary">
@@ -212,10 +283,12 @@ class AgentForm extends React.Component {
                 </p>{" "}
               </CardHeader>{" "}
               <CardBody>
-                <GridContainer>
-                  <GridItem xs={12} sm={12} md={3}>
+             <Grid justifyContent="center" alignItems="center">
+                  <GridItem xs={12} sm={12} md={8} marginTop="100px" marginBottom="100px">
+                
                     <Autocomplete
-                      id="wilayas-select-demo"
+                      id="wilayas-field"
+                      disabled={this.state.is_wilayasdisabled ? true: false}
                       style={{
                         width: 300,
                       }}
@@ -245,81 +318,224 @@ class AgentForm extends React.Component {
                       onChange={(e, value, reason) =>
                         this.handleChoixWilayas(e, value, reason)
                       }
+                      type="number"
                       required
                     />
-                  </GridItem>{" "}
-                  <GridItem xs={12} sm={12} md={4}></GridItem>{" "}
-                </GridContainer>{" "}
-                <GridContainer>
-                  <GridItem xs={12} sm={12} md={4}>
-
+                  </GridItem>
+                  <GridItem xs={12} sm={12} md={8}>
+                    {" "}
                     <Autocomplete
+                    onChange={(e, value, reason) =>
+                            this.handleChoixCommune(e, value, reason)
+                          }
                       multiple
-                    
-                      id="multiple-limit-tags"
-                      options={this.state.all_commune.filter( (commune)=>this.state.choosedWilayaNumber===commune.wilaya_id)}
+                      id="commune-field"
+                      options={this.state.all_commune.filter(
+                        (commune) =>
+                          this.state.choosedWilayaNumber === commune.wilaya_id
+                      )}
                       getOptionLabel={(option) => option.nom}
                       renderInput={(params) => (
                         <TextField
                           {...params}
                           variant="outlined"
-                          label="limitTags"
-                          placeholder="Favorites"
-                          onChange={(e, value, reason) =>
-                        this.handleChoixCommune(e, value, reason)
-                      }
+                          label="Commune touchèes"
+                          placeholder="Communes"
+                          type="number"
+                          
                         />
+
                       )}
                     />{" "}
                   </GridItem>{" "}
-                  <GridItem xs={12} sm={12} md={6}>
-                    <CustomInput
-                      labelText="Last Name"
-                      id="last-name"
-                      formControlProps={{
-                        fullWidth: true,
-                      }}
-                    />{" "}
-                  </GridItem>{" "}
-                </GridContainer>{" "}
-                <GridContainer>
-                  <GridItem xs={12} sm={12} md={4}>
-                    <CustomInput
-                      labelText="City"
-                      id="city"
-                      formControlProps={{
-                        fullWidth: true,
-                      }}
-                    />{" "}
-                  </GridItem>{" "}
-                  <GridItem xs={12} sm={12} md={4}>
-                    <CustomInput
-                      labelText="Country"
-                      id="country"
-                      formControlProps={{
-                        fullWidth: false,
-                      }}
-                    />{" "}
-                  </GridItem>{" "}
-                  <GridItem xs={12} sm={12} md={4}>
-                    <CustomInput
-                      labelText="Postal Code"
-                      id="postal-code"
+                </Grid>{" "}
+                <Grid>
+                  <GridItem xs={12} sm={12} md={8}></GridItem>{" "}
+                  <Grid>
+                    <GridItem xs={12} sm={12} md={12}>
+                      <TextField
+                      required
+                      type="number"
+                      label="Cases number"
+                      id="nbCases"
+                        onChange={(e)=>this.handleNbCases(e)}
+                        type="number"
+                      margin="dense"
+                      />{" "}
+                    </GridItem>{" "}
+                  </Grid>
+                </Grid>{" "}
+                <Grid>
+                  <GridItem xs={12} sm={12} md={12}>
+                    <TextField
+                    required
+                    type="number"
+                    onChange={(e)=>this.handleNbRecovered(e)}
+
+                    label="Recovered persons"
+                    type="number"
+                      id="nbRecovered"
                       formControlProps={{
                         fullWidth: false,
                       }}
                     />{" "}
                   </GridItem>{" "}
-                </GridContainer>{" "}
-                <GridContainer></GridContainer>{" "}
-              </CardBody>{" "}
+                </Grid>
+                <Grid>
+                  <GridItem xs={12} sm={12} md={12}>
+                    <TextField
+                    onChange={(e)=>this.handleNbGueris(e)}
+                    required
+                    type="number"
+                    label="Gueris person number"
+                      id="nbGueris"
+                      formControlProps={{
+                        fullWidth: false,
+                      }}
+                    />{" "}
+                  </GridItem>{" "}
+                </Grid>
+                <Grid>
+                  <GridItem xs={12} sm={12} md={12}>
+                    <TextField
+                        required
+                        type="number"
+                        label="Death number"
+                      onChange={(e)=>this.handleNbDeaths(e)}
+
+                      id="nbDeath"
+                      formControlProps={{
+                        fullWidth: false,
+                      }}
+                    />{" "}
+                  </GridItem>{" "}
+                </Grid>
+                <GridContainer> </GridContainer>{" "}
+
+                            </CardBody>{" "}
               <CardFooter>
-                <Button color="primary"> Update Profile </Button>{" "}
+                <Button color="primary" type="submit"> Update Profile </Button>{" "}
               </CardFooter>{" "}
             </Card>{" "}
           </GridItem>{" "}
-          <GridItem xs={12} sm={12} md={4}></GridItem>{" "}
-        </GridContainer>{" "}
+          <GridItem xs={12} sm={12} md={4}>
+            {" "}
+          </GridItem>{" "}
+        </Grid>{" "}
+
+
+        <MaterialTable
+        title="Wilayas data remplis "
+        columns={[
+        { title: 'Wilayas', field: 'choosedWilaya' ,
+        editComponent: props => (
+          <Autocomplete
+          
+                      id="wilayas-field"
+                      style={{
+                        width: 100,
+                      }}
+                      
+                      options={this.state.all_wilayas}
+                      classes={{
+                        option: classes.option,
+                      }}
+                      autoHighlight
+                      getOptionLabel={(option) => option.nom}
+                      renderOption={(option) => (
+                        <React.Fragment>
+                          <span> {option.code} </span>({option.nom}){" "}
+                        </React.Fragment>
+                      )}
+                      renderInput={(params) => (
+                        <TextField
+                          {...params}
+                          label="Choose wilayas"
+                          variant="outlined"
+                          inputProps={{
+                            ...params.inputProps,
+                            autoComplete: "new-password", // disable autocomplete and autofill
+                          }}
+                        />
+                      )}
+                      onChange={
+                        (e,value,reason) => {
+                                  console.log(value)
+                                  var data = { ...props.rowData };
+                                  data.wilaya = value;
+                                  data.choosedWilaya = value.nom
+                                  props.onRowDataChange(data);
+                             }
+                      }
+                      value={props.value || ""}
+                      type="number"
+                      required
+                    />
+
+
+        )
+           
+          
+        },
+        { title: 'Cases Number', field: 'nbCase', type: 'numeric' },
+        { title: 'Recovered Number', field: 'nbRecovered', type: 'numeric' },
+        { title: 'Gueris Number', field: 'nbGueris', type: 'numeric' },
+        { title: 'Death Number', field: 'nbDeath', type: 'numeric' },
+      
+      ]}
+        data={this.state.data}
+
+        actions={[
+        {
+          icon: 'save',
+          tooltip: 'Save User',
+          onClick: (event, rowData) => alert("You saved " + rowData.name)
+        },
+        {
+          icon: 'delete',
+          tooltip: 'Delete User',
+          onClick: (event, rowData) => alert("You want to delete " + rowData.name)
+        }
+      ]}
+      editable={{
+          onRowAdd: newData =>
+            new Promise((resolve, reject) => {
+              setTimeout(() => {
+                {
+                  const data = this.state.data;
+                  data.push(newData);
+                  this.setState({ data }, () => resolve());
+                }
+                resolve()
+              }, 1000)
+            }),
+          onRowUpdate: (newData, oldData) =>
+            new Promise((resolve, reject) => {
+              setTimeout(() => {
+                {
+                  const data = this.state.data;
+                  const index = data.indexOf(oldData);
+                  data[index] = newData;
+                  this.setState({ data }, () => resolve());
+                }
+                resolve()
+              }, 1000)
+            }),
+          onRowDelete: oldData =>
+            new Promise((resolve, reject) => {
+              setTimeout(() => {
+                {
+                  let data = this.state.data;
+                  const index = data.indexOf(oldData);
+                  data.splice(index, 1);
+                  this.setState({ data }, () => resolve());
+                }
+                resolve()
+              }, 1000)
+            }),
+        }}
+      />
+     
       </div>
     );
   }
