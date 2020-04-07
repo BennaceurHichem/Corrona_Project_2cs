@@ -460,14 +460,67 @@ addWilayaToData = (e)=>{
                       )}
                       onChange={
                         (e,value,reason) => {
-                                  console.log(value)
+                                  console.log("value in wilayas:"+Object.keys(value))
                                   var data = { ...props.rowData };
                                   data.wilaya = value;
                                   data.choosedWilaya = value.nom
+                                  data.wilaya_id = value.id ? value.id : -1
                                   props.onRowDataChange(data);
                              }
                       }
-                      value={props.value || ""}
+                      value={this.state.data.choosedWilaya || ""}
+                      type="number"
+                      required
+                    />
+
+
+        )
+           
+          
+        },
+        { title: 'Commune', field: 'nom_commune' ,
+        editComponent: props => (
+          <Autocomplete
+          
+                      id="wilayas-field"
+                      style={{
+                        width: 100,
+                      }}
+                      
+                      options={this.findCommuneByWilayas(this.state.all_commune,props.rowData.wilaya_id)}
+                      classes={{
+                        option: classes.option,
+                      }}
+                      autoHighlight
+                      getOptionLabel={(option) => option.nom}
+                      renderOption={(option) => (
+                        <React.Fragment>
+                          <span> {option.code} </span>({option.nom}){" "}
+                        </React.Fragment>
+                      )}
+                      renderInput={(params) => (
+                        <TextField
+                          {...params}
+                          label="Choose commune"
+                          variant="outlined"
+                          inputProps={{
+                            ...params.inputProps,
+                            autoComplete: "new-password", // disable autocomplete and autofill
+                          }}
+                        />
+                      )}
+                      onChange={
+                        (e,value,reason) => {
+                          console.log("value in commune:"+Object.keys(value))
+
+                                  console.log(" wilaya_id :   "+props.rowData.wilaya_id)
+                                  var data = { ...props.rowData };
+                                  data.commune = value;
+                                  data.nom_commune = value.nom
+                                  props.onRowDataChange(data);
+                             }
+                      }
+                      value={this.state.data.nom_commune || ""}
                       type="number"
                       required
                     />
@@ -485,18 +538,6 @@ addWilayaToData = (e)=>{
       ]}
         data={this.state.data}
 
-        actions={[
-        {
-          icon: 'save',
-          tooltip: 'Save User',
-          onClick: (event, rowData) => alert("You saved " + rowData.name)
-        },
-        {
-          icon: 'delete',
-          tooltip: 'Delete User',
-          onClick: (event, rowData) => alert("You want to delete " + rowData.name)
-        }
-      ]}
       editable={{
           onRowAdd: newData =>
             new Promise((resolve, reject) => {
