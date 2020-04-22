@@ -17,13 +17,15 @@ import TextField from "@material-ui/core/TextField";
 import avatar from "assets/img/faces/marc.jpg";
 import Grid from "@material-ui/core/Grid";
 import FormControl from '@material-ui/core/FormControl';
-
-import data_wilayas from "alger_data.json";
-import wilayas from "./wilayas.json";
+import { Box } from '@material-ui/core'
+import data_communes from "./communes_api.json";
+import wilayas from "./wilayas_api.json";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import { get } from 'lodash'   
 import Table from 'components/Table/Table'
 import MaterialTable from 'material-table';
+import Typography from "@material-ui/core/Typography";
+import axios from 'axios'
 
 const styles = {
   cardCategoryWhite: {
@@ -49,90 +51,98 @@ const useStyles = makeStyles(styles);
 class AgentForm extends React.Component {
   constructor(props) {
     super(props);
-    //all commune by wilayas and each commune have nb persone touches
-    /*
-            one object created wilayas_commune
-            {
-                wilayas : nom_wilayas,
-                lat_wilaya: 0,
-                    lng_wilaya: 0,
-                commune : {
-                    {
-                          nom_commune: nom,
-                          nbrecovered: 0,
-                          lat: x,
-                          lng:y,
-                          nbDeath: 0,
-                          nbCase: 0,
-                          nbgueris: 0,
-
-                    },
-                    {
-                          nom_commune: nom,
-                          lat: x,
-                          lng:y,
-                          nbrecovered: 0,
-                          nbDeath: 0,
-                          nbCase: 0,
-                          nbgueris: 0,
-                    },
-                        .
-                        .
-                        .
-
-
-                }
-            }
-
-
-            */
+   
 
     // Don't call this.setState() here!
-    const allCommune = data_wilayas.map((item) => item);
-    const allWilayas = wilayas.map((item) => item);
-    console.log(allWilayas);
+    const allCommune = data_communes.map((item) => item);
+ 
     this.state = {
       data:[],
-      all_commune: allCommune,
-      all_wilayas: allWilayas,
+      all_commune: [],
+      all_wilayas: [],
       choosedWilaya: "",
+      commune_api:[],
       choosedWilayaNumber: 0,
+     
       //this will be used when the user start picking their commune where he couldn't change the wilayas until he delete all communes
       is_wilayasdisabled: false,
-      nbRecovered: 0,
-      nbDeath: 0,
-      nbCase: 0,
-      nbGueris: 0,
-      wilayas_communes: [
-      
+      number_recovered: 0,
+      number_death: 0,
+      number_confirmed_case: 0,
+      number_sick: 0,
+      "number_carrier": 0,
+      "number_suspect": 0,
         
-      ],
+        
+      
+    
     };
   }
 
-  componentDidMount() {
-    /*0:
-            longitude: -0.1869644
-            latitude: 27.9716342
-            nom: "Adrar"
-            id: "1"
-            wilaya_id: "1"
-            code_postal: "01001"
-            */
+  getCommunes()
+{
 
-    const wilayasSearch = this.findCommuneByWilayas(
-      this.state.wilayas_communes,
-      16
-    );
-    const ids = data_wilayas.map((item) => item.id);
-    const communeName = data_wilayas.map((item) => item.nom);
+  const townsUrl = 'https://cors-anywhere.herokuapp.com/https://corona-watch-api.herokuapp.com/corona-watch-api/v1/geolocation/towns/'
+  return axios.get(townsUrl,{
+    headers:{
+      Authorization:'Basic YWRtaW46YWRtaW4=',
+    
+      'Accept': 'application/json',
+      'Content-Type': 'application/json;charset=utf-8',
+    }
+  })
+ 
+
+}
+
+
+getWilayas(){
+
+
+  const token = "YWRtaW46YWRtaW4="
+  //const headers = { 'Authorization':+' Basic YWRtaW46YWRtaW4=' };
+  const url = 'https://cors-anywhere.herokuapp.com/https://corona-watch-api.herokuapp.com/corona-watch-api/v1/geolocation/states/'
+  return axios.get(url,{
+    headers:{
+      Authorization:'Basic YWRtaW46YWRtaW4=',
+    
+      'Accept': 'application/json',
+      'Content-Type': 'application/json;charset=utf-8',
+    }
+  })
+ 
+
+}
+  componentDidMount() {
+
+    axios.defaults.headers.common['Authorization'] = 'Basic YWRtaW46YWRtaW4=';
+
+    Promise.all([this.getWilayas(), this.getCommunes()])
+    .then(([all_wilayas, all_commune])  => {
+      const dataWilayas = all_wilayas.data;
+      const dataCommunes =all_commune.data;
+        this.setState({
+          all_wilayas: dataWilayas,
+          all_commune:dataCommunes,
+        });
+    });
+    
+    
+        
+
+
+    
+        
+
+
 
   }
 
   //get all commune of a specific wilayas
-  findCommuneByWilayas(data, wilayas_num) {
-    return data.filter((element) => {
-      return element.wilaya_id == wilayas_num;
+  findCommuneByWilayas(communes, wilaya_num) {
+    console.log("wilaays num "+ wilaya_num)
+    return communes.filter((element) => {
+      return element.state == wilaya_num;
     });
   }
   handleChoixWilayas = (e, value, reason) => {
@@ -141,6 +151,7 @@ class AgentForm extends React.Component {
     console.log("initial state: " + this.state.wilayas_communes.length);
     console.log("reason" + reason);
     console.log("this.state.wilayas_commune.wilaya = " + this.state.wilayas_communes);
+
     */
  
 
@@ -198,14 +209,30 @@ class AgentForm extends React.Component {
   }
  
 
+  patchCommune(id,patchData){
+    const townsUrl = `https://cors-anywhere.herokuapp.com/https://corona-watch-api.herokuapp.com/corona-watch-api/v1/geolocation/towns/${id}`
+    return axios.patch(townsUrl,
+      
+        patchData
+      ,{
+      headers:{
+        Authorization:'Basic YWRtaW46YWRtaW4=',
+      
+        'Accept': 'application/json',
+        'Content-Type': 'application/json;charset=utf-8',
+      }
+    })
+
+  }
+
 
 //handle all numbers chage and store them in the state 
-handleNbCases = (e)=>{
+handleNbConfirmedCase = (e)=>{
 
     console.log("value cases"+e.target.value)
     const num = e.target.value;
         this.setState((prevState)=>({
-          nbCase:num,
+          number_confirmed_case:num,
 
            
         }))
@@ -218,30 +245,40 @@ handleNbRecovered = (e)=>{
     const num = e.target.value;
     this.setState({
 
-        nbRecovered:num,
+        number_recovered:num,
     })
 
     
 }
-handleNbGueris = (e)=>{
+handleNbSick = (e)=>{
 
     console.log("value Gueris"+e.target.value)
     const num = e.target.value;
     this.setState({
 
-        nbGueris:num,
+        number_sick:num,
     })
     
 }
 
-handleNbDeaths= (e)=>{
+handleNbDeath= (e)=>{
 
     console.log("value death"+e.target.value)
     const num = e.target.value;
     this.setState({
 
-        nbDeath:num,
+        number_death:num,
     })
+}
+
+handleNbSuspect= (e)=>{
+
+  console.log("value death"+e.target.value)
+  const num = e.target.value;
+  this.setState({
+
+      number_suspect:num,
+  })
 }
 
 
@@ -269,165 +306,18 @@ addWilayaToData = (e)=>{
     const { classes } = this.props;
     return (
       <div>
-        <Grid>
-          <GridItem xs={12} sm={12} md={8}>
-            <Card>
-              <CardHeader color="primary">
-                <h4 className={classes.cardTitleWhite}>
-                  {" "}
-                  Remplissage de donnés{" "}
-                </h4>{" "}
-                <p className={classes.cardCategoryWhite}>
-                  {" "}
-                  Agent de santè{" "}
-                </p>{" "}
-              </CardHeader>{" "}
-              <CardBody>
-             <Grid justifyContent="center" alignItems="center">
-                  <GridItem xs={12} sm={12} md={8} marginTop="100px" marginBottom="100px">
-                
-                    <Autocomplete
-                      id="wilayas-field"
-                      disabled={this.state.is_wilayasdisabled ? true: false}
-                      style={{
-                        width: 300,
-                      }}
-                      options={this.state.all_wilayas}
-                      classes={{
-                        option: classes.option,
-                      }}
-                      autoHighlight
-                      getOptionLabel={(option) => option.nom}
-                      renderOption={(option) => (
-                        <React.Fragment>
-                          <span> {option.code} </span>({option.nom}){" "}
-                        </React.Fragment>
-                      )}
-                      disableClearable="true"
-                      renderInput={(params) => (
-                        <TextField
-                          {...params}
-                          label="Choose wilayas"
-                          variant="outlined"
-                          inputProps={{
-                            ...params.inputProps,
-                            autoComplete: "new-password", // disable autocomplete and autofill
-                          }}
-                        />
-                      )}
-                      onChange={(e, value, reason) =>
-                        this.handleChoixWilayas(e, value, reason)
-                      }
-                      type="number"
-                      required
-                    />
-                  </GridItem>
-                  <GridItem xs={12} sm={12} md={8}>
-                    {" "}
-                    <Autocomplete
-                    onChange={(e, value, reason) =>
-                            this.handleChoixCommune(e, value, reason)
-                          }
-                      multiple
-                      id="commune-field"
-                      options={this.state.all_commune.filter(
-                        (commune) =>
-                          this.state.choosedWilayaNumber === commune.wilaya_id
-                      )}
-                      getOptionLabel={(option) => option.nom}
-                      renderInput={(params) => (
-                        <TextField
-                          {...params}
-                          variant="outlined"
-                          label="Commune touchèes"
-                          placeholder="Communes"
-                          type="number"
-                          
-                        />
+      
+      <Box display="flex" justifyContent="center" m={1} p={1} bgcolor="background.paper">
+      <Box p={1} >
 
-                      )}
-                    />{" "}
-                  </GridItem>{" "}
-                </Grid>{" "}
-                <Grid>
-                  <GridItem xs={12} sm={12} md={8}></GridItem>{" "}
-                  <Grid>
-                    <GridItem xs={12} sm={12} md={12}>
-                      <TextField
-                      required
-                      type="number"
-                      label="Cases number"
-                      id="nbCases"
-                        onChange={(e)=>this.handleNbCases(e)}
-                        type="number"
-                      margin="dense"
-                      />{" "}
-                    </GridItem>{" "}
-                  </Grid>
-                </Grid>{" "}
-                <Grid>
-                  <GridItem xs={12} sm={12} md={12}>
-                    <TextField
-                    required
-                    type="number"
-                    onChange={(e)=>this.handleNbRecovered(e)}
+      <Typography component="h1" variant="h5">
+              Remplissage des Informations des wilayas et communes affectè 
+            </Typography>
 
-                    label="Recovered persons"
-                    type="number"
-                      id="nbRecovered"
-                      formControlProps={{
-                        fullWidth: false,
-                      }}
-                    />{" "}
-                  </GridItem>{" "}
-                </Grid>
-                <Grid>
-                  <GridItem xs={12} sm={12} md={12}>
-                    <TextField
-                    onChange={(e)=>this.handleNbGueris(e)}
-                    required
-                    type="number"
-                    label="Gueris person number"
-                      id="nbGueris"
-                      formControlProps={{
-                        fullWidth: false,
-                      }}
-                    />{" "}
-                  </GridItem>{" "}
-                </Grid>
-                <Grid>
-                  <GridItem xs={12} sm={12} md={12}>
-                    <TextField
-                        required
-                        type="number"
-                        label="Death number"
-                      onChange={(e)=>this.handleNbDeaths(e)}
-
-                      id="nbDeath"
-                      formControlProps={{
-                        fullWidth: false,
-                      }}
-                    />{" "}
-                  </GridItem>{" "}
-                </Grid>
-                <GridContainer> </GridContainer>{" "}
-
-                            </CardBody>{" "}
-              <CardFooter>
-                <Button color="primary" type="submit"> Update Profile </Button>{" "}
-              </CardFooter>{" "}
-            </Card>{" "}
-          </GridItem>{" "}
-          <GridItem xs={12} sm={12} md={4}>
-            {" "}
-          </GridItem>{" "}
-        </Grid>{" "}
-
-
-        <MaterialTable
+      <MaterialTable
         title="Wilayas data remplis "
         columns={[
-        { title: 'Wilayas', field: 'choosedWilaya' ,
+        { title: 'Wilayas', field: 'nom_wilaya' ,
         editComponent: props => (
           <Autocomplete
           
@@ -441,10 +331,10 @@ addWilayaToData = (e)=>{
                         option: classes.option,
                       }}
                       autoHighlight
-                      getOptionLabel={(option) => option.nom}
+                      getOptionLabel={(option) => typeof option==="string" ?option: option.name}
                       renderOption={(option) => (
                         <React.Fragment>
-                          <span> {option.code} </span>({option.nom}){" "}
+                          <span> {option.code} </span>({option.name}){" "}
                         </React.Fragment>
                       )}
                       renderInput={(params) => (
@@ -460,15 +350,16 @@ addWilayaToData = (e)=>{
                       )}
                       onChange={
                         (e,value,reason) => {
-                                  console.log("value in wilayas:"+Object.keys(value))
+                                  console.log("value in wilayas:"+value ? Object.keys(value):"nothing")
                                   var data = { ...props.rowData };
-                                  data.wilaya = value;
-                                  data.choosedWilaya = value.nom
+                                
+                                  data.nom_wilaya = value.name
                                   data.wilaya_id = value.id ? value.id : -1
+
                                   props.onRowDataChange(data);
                              }
                       }
-                      value={this.state.data.choosedWilaya || ""}
+                      value={props.rowData.nom_wilaya || ""}
                       type="number"
                       required
                     />
@@ -482,7 +373,7 @@ addWilayaToData = (e)=>{
         editComponent: props => (
           <Autocomplete
           
-                      id="wilayas-field"
+                      id="commune-field"
                       style={{
                         width: 100,
                       }}
@@ -491,11 +382,11 @@ addWilayaToData = (e)=>{
                       classes={{
                         option: classes.option,
                       }}
-                      autoHighlight
-                      getOptionLabel={(option) => option.nom}
+                     
+                      getOptionLabel={(option) => option ?option.name:"No option"}
                       renderOption={(option) => (
                         <React.Fragment>
-                          <span> {option.code} </span>({option.nom}){" "}
+                          <span> {option.code} </span>({option.name}){" "}
                         </React.Fragment>
                       )}
                       renderInput={(params) => (
@@ -511,16 +402,21 @@ addWilayaToData = (e)=>{
                       )}
                       onChange={
                         (e,value,reason) => {
-                          console.log("value in commune:"+Object.keys(value))
+                          console.log("value in commune:"+value ?Object.keys(value):null)
+                            console.log("row data : "+ Object.keys(props.rowData))
 
-                                  console.log(" wilaya_id :   "+props.rowData.wilaya_id)
+
+                                 //when data changed push this data 
                                   var data = { ...props.rowData };
-                                  data.commune = value;
-                                  data.nom_commune = value.nom
+                                 
+                                  data.nom_commune = value.name
+                                  data.id_commune = value.id
+
+                                  console.log("all data row :"+Object.keys(data))
                                   props.onRowDataChange(data);
                              }
                       }
-                      value={this.state.data.nom_commune || ""}
+                      value={props.rowData.nom_commune || ""}
                       type="number"
                       required
                     />
@@ -530,10 +426,11 @@ addWilayaToData = (e)=>{
            
           
         },
-        { title: 'Cases Number', field: 'nbCase', type: 'numeric' },
-        { title: 'Recovered Number', field: 'nbRecovered', type: 'numeric' },
-        { title: 'Gueris Number', field: 'nbGueris', type: 'numeric' },
-        { title: 'Death Number', field: 'nbDeath', type: 'numeric' },
+        { title: 'Cases Number', field: 'number_confirmed_case', type: 'numeric' },
+        { title: 'Recovered Number', field: 'number_recovered', type: 'numeric' },
+        { title: 'Sick Number', field: 'number_sick', type: 'numeric' },
+        { title: 'Death Number', field: 'number_death', type: 'numeric' },
+        { title: 'Suspect Number', field: 'number_suspect', type: 'numeric' }
       
       ]}
         data={this.state.data}
@@ -546,18 +443,58 @@ addWilayaToData = (e)=>{
                   const data = this.state.data;
                   data.push(newData);
                   this.setState({ data }, () => resolve());
+
+
+                    const id  = newData.id_commune
+                    const number_death = newData.number_death
+                    const number_suspect = newData.number_suspect
+                    const number_confirmed_cases = newData.number_confirmed_case
+                    const number_recovered= newData.number_recovered
+                    const number_sick = newData.number_sick
+                    const keys = {
+                      number_death,
+                      number_suspect,
+                      number_confirmed_cases,
+                      number_recovered,
+                      number_sick
+                    }
+                    this.patchCommune(id,keys)
+
+
                 }
                 resolve()
-              }, 1000)
+              }, 3000)
             }),
           onRowUpdate: (newData, oldData) =>
             new Promise((resolve, reject) => {
+              console.log("newData: "+ Object.keys(newData) )
               setTimeout(() => {
                 {
+
                   const data = this.state.data;
                   const index = data.indexOf(oldData);
                   data[index] = newData;
+                 
                   this.setState({ data }, () => resolve());
+                  const id  = newData.id_commune
+
+                  const number_death = newData.number_death
+                  const number_suspect = newData.number_suspect
+                  const number_confirmed_cases = newData.number_confirmed_case
+                  const number_recovered= newData.number_recovered
+                  const number_sick = newData.number_sick
+
+                  const keys = {
+                    number_death,
+                    number_suspect,
+                    number_confirmed_cases,
+                    number_recovered,
+                    number_sick
+                  }
+                  this.patchCommune(id,keys)
+
+                    //this.patchCommune()
+
                 }
                 resolve()
               }, 1000)
@@ -570,12 +507,33 @@ addWilayaToData = (e)=>{
                   const index = data.indexOf(oldData);
                   data.splice(index, 1);
                   this.setState({ data }, () => resolve());
+
+                  const id  = oldData.id_commune
+                    const number_death = 0
+                    const number_suspect = 0
+                    const number_confirmed_cases = 0
+                    const number_recovered= 0
+                    const number_sick = 0
+                    const keys = {
+                      number_death,
+                      number_suspect,
+                      number_confirmed_cases,
+                      number_recovered,
+                      number_sick
+                    }
+                    this.patchCommune(id,keys)
                 }
                 resolve()
               }, 1000)
             }),
         }}
       />
+
+
+
+      </Box>
+      </Box>
+      
      
       </div>
     );

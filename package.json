@@ -57,6 +57,7 @@
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.1.0",
     "react-swipeable-views": "0.13.3",
+    "suneditor-react": "^2.10.0",
     "yup": "^0.28.3"
   },
   "scripts": {

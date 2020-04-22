@@ -18,6 +18,8 @@ import Map from 'components/Map/Map'
 import CoronaApp from './CoronaApp'
 import AccessComponent from 'components/Login/AccessComponent'
 import AgentForm from 'components/AgentForm/AgentForm'
+import Editor from 'components/MyComponents/Editor'
+import RecipeReviewCard from 'components/MyComponents/RecipeReviewCard'
 
 import Dashboard from 'views/Dashboard/Dashboard'
 import data_wilayas from 'alger_data.json';
@@ -68,7 +70,10 @@ getAllWilaya(data) {
   return (
     <div className="App">
       
-  <AgentForm />
+ {/* */} <AgentForm />
+
+
+
           
     </div>
   
