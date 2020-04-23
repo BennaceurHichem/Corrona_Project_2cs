@@ -60,6 +60,7 @@ class AgentForm extends React.Component {
       data:[],
       all_commune: [],
       all_wilayas: [],
+      initialTableData: [],
       choosedWilaya: "",
       commune_api:[],
       choosedWilayaNumber: 0,
@@ -69,7 +70,7 @@ class AgentForm extends React.Component {
       number_recovered: 0,
       number_death: 0,
       number_confirmed_case: 0,
-      number_sick: 0,
+      number_carrier: 0,
       "number_carrier": 0,
       "number_suspect": 0,
         
@@ -79,6 +80,21 @@ class AgentForm extends React.Component {
     };
   }
 
+
+/*
+
+Convert wilaya id(code) to the specific srting 
+
+*/
+  getWilayaStringFromId(id){
+   
+    return wilayas.filter(i=>i.code===id)[0].name
+  }
+  /*
+get All Communes from backend   api  
+
+*/
+  
   getCommunes()
 {
 
@@ -121,10 +137,42 @@ getWilayas(){
     .then(([all_wilayas, all_commune])  => {
       const dataWilayas = all_wilayas.data;
       const dataCommunes =all_commune.data;
-        this.setState({
+      //this array contain all communes treated before(where all number are zeroes), this is for displaying these data initialy on the table 
+      const initialData = dataCommunes.filter(function(item) {
+        console.log("item"+ item)
+        return ( item.number_confirmed_cases !=0 && item.number_death !=0)
+      })
+        let buffer=[]
+        let finalData=[]
+        /*
+Create conformed date with the table data to display initially
+Displayed data verify the number_death!==0 && number_cases!==0, only those communes will be displayd initially 
+*/
+       finalData = initialData.map( (element)=>
+            
+             buffer.push({
+              number_confirmed_cases: element.number_confirmed_cases,
+              number_death: element.number_death,
+              number_suspect: element.number_suspect,
+              number_carrier: element.number_carrier,
+              number_recovered: element.number_recovered,
+              number_sick: element.number_sick,
+              nom_wilaya: this.getWilayaStringFromId(element.state),
+              nom_commune:element.name
+             
+            })
+        
+      )
+            
+      console.log("typeof data"+typeof initialData)
+        console.log("init data"+initialData)
+        this.setState((prevState)=>({
           all_wilayas: dataWilayas,
           all_commune:dataCommunes,
-        });
+          data: [...prevState.data,...buffer]
+              
+          
+        }));
     });
     
     
@@ -250,13 +298,13 @@ handleNbRecovered = (e)=>{
 
     
 }
-handleNbSick = (e)=>{
+handleNbCarrier = (e)=>{
 
     console.log("value Gueris"+e.target.value)
     const num = e.target.value;
     this.setState({
 
-        number_sick:num,
+        number_carrier:num,
     })
     
 }
@@ -325,7 +373,7 @@ addWilayaToData = (e)=>{
                       style={{
                         width: 100,
                       }}
-                      
+                      disableClearable
                       options={this.state.all_wilayas}
                       classes={{
                         option: classes.option,
@@ -377,7 +425,7 @@ addWilayaToData = (e)=>{
                       style={{
                         width: 100,
                       }}
-                      
+                      disableClearable
                       options={this.findCommuneByWilayas(this.state.all_commune,props.rowData.wilaya_id)}
                       classes={{
                         option: classes.option,
@@ -402,8 +450,7 @@ addWilayaToData = (e)=>{
                       )}
                       onChange={
                         (e,value,reason) => {
-                          console.log("value in commune:"+value ?Object.keys(value):null)
-                            console.log("row data : "+ Object.keys(props.rowData))
+                          
 
 
                                  //when data changed push this data 
@@ -428,9 +475,9 @@ addWilayaToData = (e)=>{
         },
         { title: 'Cases Number', field: 'number_confirmed_case', type: 'numeric' },
         { title: 'Recovered Number', field: 'number_recovered', type: 'numeric' },
-        { title: 'Sick Number', field: 'number_sick', type: 'numeric' },
+        { title: 'Carrier Number', field: 'number_carrier', type: 'numeric' },
         { title: 'Death Number', field: 'number_death', type: 'numeric' },
-        { title: 'Suspect Number', field: 'number_suspect', type: 'numeric' }
+        { title: 'Suspect Number', field: 'number_suspect', type: 'numeric'}
       
       ]}
         data={this.state.data}
@@ -450,13 +497,13 @@ addWilayaToData = (e)=>{
                     const number_suspect = newData.number_suspect
                     const number_confirmed_cases = newData.number_confirmed_case
                     const number_recovered= newData.number_recovered
-                    const number_sick = newData.number_sick
+                    const number_carrier = newData.number_carrier
                     const keys = {
                       number_death,
                       number_suspect,
                       number_confirmed_cases,
                       number_recovered,
-                      number_sick
+                      number_carrier
                     }
                     this.patchCommune(id,keys)
 
@@ -482,14 +529,14 @@ addWilayaToData = (e)=>{
                   const number_suspect = newData.number_suspect
                   const number_confirmed_cases = newData.number_confirmed_case
                   const number_recovered= newData.number_recovered
-                  const number_sick = newData.number_sick
+                  const number_carrier = newData.number_carrier
 
                   const keys = {
                     number_death,
                     number_suspect,
                     number_confirmed_cases,
                     number_recovered,
-                    number_sick
+                    number_carrier
                   }
                   this.patchCommune(id,keys)
 
@@ -513,13 +560,13 @@ addWilayaToData = (e)=>{
                     const number_suspect = 0
                     const number_confirmed_cases = 0
                     const number_recovered= 0
-                    const number_sick = 0
+                    const number_carrier = 0
                     const keys = {
                       number_death,
                       number_suspect,
                       number_confirmed_cases,
                       number_recovered,
-                      number_sick
+                      number_carrier
                     }
                     this.patchCommune(id,keys)
                 }
