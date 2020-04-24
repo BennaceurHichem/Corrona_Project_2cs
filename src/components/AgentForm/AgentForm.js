@@ -227,11 +227,8 @@ Displayed data verify the number_death!==0 && number_cases!==0, only those commu
           ...prevState,
           is_wilayasdisabled:true,
           wilayas_communes:{
-                ...prevState.wilayas_communes,
-                
-                 
-                  communes: value,
-                
+                ...prevState.wilayas_communes, 
+                  communes: value,               
           }
           
               
@@ -487,17 +484,15 @@ addWilayaToData = (e)=>{
             new Promise((resolve, reject) => {
               setTimeout(() => {
                 {
-                  const data = this.state.data;
-                  data.push(newData);
-                  this.setState({ data }, () => resolve());
-
+                
+                  
 
                     const id  = newData.id_commune
-                    const number_death = newData.number_death
-                    const number_suspect = newData.number_suspect
-                    const number_confirmed_cases = newData.number_confirmed_cases
-                    const number_recovered= newData.number_recovered
-                    const number_carrier = newData.number_carrier
+                    const number_death = newData.number_death>=0 ?newData.number_death:0
+                    const number_suspect = newData.number_suspect>=0 ?newData.number_suspect:0
+                    const number_confirmed_cases = newData.number_confirmed_cases>=0 ?newData.number_confirmed_cases:0
+                    const number_recovered= newData.number_recovered>=0 ?newData.number_recovered:0
+                    const number_carrier = newData.number_carrier>=0? newData.number_carrier:0
                     const keys = {
                       number_death,
                       number_suspect,
@@ -505,7 +500,49 @@ addWilayaToData = (e)=>{
                       number_recovered,
                       number_carrier
                     }
-                    this.patchCommune(id,keys)
+                    this.patchCommune(id,keys).then((response) => {
+                                            // Success 🎉
+                                            console.log(response);
+
+                                            const data = this.state.data;
+                                            if(newData.number_death<0)  newData.number_death=0
+                                            if(newData.number_suspect<0)  newData.number_suspect=0
+                                            if(newData.number_confirmed_cases<0)  newData.number_confirmed_cases=0
+                                            if(newData.number_recovered<0)  newData.number_recovered=0
+                                            if(newData.number_carrier<0)  newData.number_carrier=0
+
+                                            data.push(newData);
+                                            this.setState({ data }, () => resolve());
+
+                                        })
+                                        .catch((error) => {
+                                            // Error 😨
+                                            if (error.response) {
+                                                /*
+                                                * The request was made and the server responded with a
+                                                * status code that falls out of the range of 2xx
+                                                */
+
+                                                alert("Incorrect data, please try again")
+                                                console.log(error.response.data);
+                                                console.log(error.response.status);
+                                                console.log(error.response.headers);
+                                            } else if (error.request) {
+
+                                              alert("Incorrect data, please try again")
+                                                /*
+                                                * The request was made but no response was received, `error.request`
+                                                * is an instance of XMLHttpRequest in the browser and an instance
+                                                * of http.ClientRequest in Node.js
+                                                */
+                                                console.log(error.request);
+                                            } else {
+                                              alert("Incorrect data, please try again")
+                                                // Something happened in setting up the request and triggered an Error
+                                                console.log('Error', error.message);
+                                            }
+                                            console.log(error.config);
+                                        });
 
 
                 }
@@ -518,18 +555,14 @@ addWilayaToData = (e)=>{
               setTimeout(() => {
                 {
 
-                  const data = this.state.data;
-                  const index = data.indexOf(oldData);
-                  data[index] = newData;
                  
-                  this.setState({ data }, () => resolve());
                   const id  = newData.id_commune
 
-                  const number_death = newData.number_death
-                  const number_suspect = newData.number_suspect
-                  const number_confirmed_cases = newData.number_confirmed_cases
-                  const number_recovered= newData.number_recovered
-                  const number_carrier = newData.number_carrier
+                    const number_death = newData.number_death >=0 ?newData.number_death:0
+                    const number_suspect = newData.number_suspect>=0 ?newData.number_suspect:0
+                    const number_confirmed_cases = newData.number_confirmed_cases>=0 ?newData.number_confirmed_cases:0
+                    const number_recovered= newData.number_recovered>=0 ?newData.number_recovered:0
+                    const number_carrier = newData.number_carrier>=0 ? newData.number_carrier:0
 
                   const keys = {
                     number_death,
@@ -538,7 +571,53 @@ addWilayaToData = (e)=>{
                     number_recovered,
                     number_carrier
                   }
-                  this.patchCommune(id,keys)
+                  this.patchCommune(id,keys).then((response) => {
+                                            // Success 🎉
+                                            console.log(response);
+
+                                            const data = this.state.data;
+                                            if(newData.number_death<0)  newData.number_death=0
+                                            if(newData.number_suspect<0)  newData.number_suspect=0
+                                            if(newData.number_confirmed_cases<0)  newData.number_confirmed_cases=0
+                                            if(newData.number_recovered<0)  newData.number_recovered=0
+                                            if(newData.number_carrier<0)  newData.number_carrier=0
+
+                                          
+                                            const index = data.indexOf(oldData);
+                                            data[index] = newData;
+                 
+                                            this.setState({ data }, () => resolve());
+                                            
+
+                                        })
+                                        .catch((error) => {
+                                            // Error 😨
+                                            if (error.response) {
+                                                /*
+                                                * The request was made and the server responded with a
+                                                * status code that falls out of the range of 2xx
+                                                */
+
+                                                alert("Incorrect data, please try again")
+                                                console.log(error.response.data);
+                                                console.log(error.response.status);
+                                                console.log(error.response.headers);
+                                            } else if (error.request) {
+
+                                              alert("Incorrect data, please try again")
+                                                /*
+                                                * The request was made but no response was received, `error.request`
+                                                * is an instance of XMLHttpRequest in the browser and an instance
+                                                * of http.ClientRequest in Node.js
+                                                */
+                                                console.log(error.request);
+                                            } else {
+                                              alert("Incorrect data, please try again")
+                                                // Something happened in setting up the request and triggered an Error
+                                                console.log('Error', error.message);
+                                            }
+                                            console.log(error.config);
+                                        });
 
                     //this.patchCommune()
 
