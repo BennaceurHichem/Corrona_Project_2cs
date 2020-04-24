@@ -69,7 +69,7 @@ class AgentForm extends React.Component {
       is_wilayasdisabled: false,
       number_recovered: 0,
       number_death: 0,
-      number_confirmed_case: 0,
+      number_confirmed_cases: 0,
       number_carrier: 0,
       "number_carrier": 0,
       "number_suspect": 0,
@@ -473,7 +473,7 @@ addWilayaToData = (e)=>{
            
           
         },
-        { title: 'Cases Number', field: 'number_confirmed_case', type: 'numeric' },
+        { title: 'Cases Number', field: 'number_confirmed_cases', type: 'numeric' },
         { title: 'Recovered Number', field: 'number_recovered', type: 'numeric' },
         { title: 'Carrier Number', field: 'number_carrier', type: 'numeric' },
         { title: 'Death Number', field: 'number_death', type: 'numeric' },
@@ -495,7 +495,7 @@ addWilayaToData = (e)=>{
                     const id  = newData.id_commune
                     const number_death = newData.number_death
                     const number_suspect = newData.number_suspect
-                    const number_confirmed_cases = newData.number_confirmed_case
+                    const number_confirmed_cases = newData.number_confirmed_cases
                     const number_recovered= newData.number_recovered
                     const number_carrier = newData.number_carrier
                     const keys = {
@@ -527,7 +527,7 @@ addWilayaToData = (e)=>{
 
                   const number_death = newData.number_death
                   const number_suspect = newData.number_suspect
-                  const number_confirmed_cases = newData.number_confirmed_case
+                  const number_confirmed_cases = newData.number_confirmed_cases
                   const number_recovered= newData.number_recovered
                   const number_carrier = newData.number_carrier
 
