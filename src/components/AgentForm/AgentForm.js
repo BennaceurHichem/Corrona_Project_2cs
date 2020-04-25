@@ -18,7 +18,7 @@ import avatar from "assets/img/faces/marc.jpg";
 import Grid from "@material-ui/core/Grid";
 import FormControl from '@material-ui/core/FormControl';
 import { Box } from '@material-ui/core'
-import data_communes from "./communes_api.json";
+
 import wilayas from "./wilayas_api.json";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import { get } from 'lodash'   
@@ -26,6 +26,7 @@ import Table from 'components/Table/Table'
 import MaterialTable from 'material-table';
 import Typography from "@material-ui/core/Typography";
 import axios from 'axios'
+import LoadingBar from 'react-top-loading-bar';
 
 const styles = {
   cardCategoryWhite: {
@@ -53,8 +54,7 @@ class AgentForm extends React.Component {
     super(props);
    
 
-    // Don't call this.setState() here!
-    const allCommune = data_communes.map((item) => item);
+  
  
     this.state = {
       data:[],
@@ -111,7 +111,10 @@ get All Communes from backend   api
 
 }
 
+  /*
+get All wilayas from backend   api  
 
+*/
 getWilayas(){
 
 
@@ -129,12 +132,24 @@ getWilayas(){
  
 
 }
+
+  /*
+Api calls are made here with their treatement 
+**filtering communes data and display only treated communes by agent de sante in the table 
+**adding loading bar to viualize the api call loading 
+**parallel api calls for optimizing the time of response 
+**validation of the data and handling errors 
+*/
   componentDidMount() {
 
     axios.defaults.headers.common['Authorization'] = 'Basic YWRtaW46YWRtaW4=';
-
+    this.LoadingBar.continuousStart()
     Promise.all([this.getWilayas(), this.getCommunes()])
     .then(([all_wilayas, all_commune])  => {
+
+
+      this.LoadingBar.complete()
+
       const dataWilayas = all_wilayas.data;
       const dataCommunes =all_commune.data;
       //this array contain all communes treated before(where all number are zeroes), this is for displaying these data initialy on the table 
@@ -158,7 +173,8 @@ Displayed data verify the number_death!==0 && number_cases!==0, only those commu
               number_recovered: element.number_recovered,
               number_sick: element.number_sick,
               nom_wilaya: this.getWilayaStringFromId(element.state),
-              nom_commune:element.name
+              nom_commune:element.name,
+              id_commune: element.id
              
             })
         
@@ -193,16 +209,12 @@ Displayed data verify the number_death!==0 && number_cases!==0, only those commu
       return element.state == wilaya_num;
     });
   }
+
+  /*
+
+
+  */
   handleChoixWilayas = (e, value, reason) => {
-
-    /*console.log("event" + Object.keys(value));
-    console.log("initial state: " + this.state.wilayas_communes.length);
-    console.log("reason" + reason);
-    console.log("this.state.wilayas_commune.wilaya = " + this.state.wilayas_communes);
-
-    */
- 
-
 
     this.setState((prevState) => ({
       choosedWilaya: value ? value.nom : "invalid",
@@ -215,9 +227,7 @@ Displayed data verify the number_death!==0 && number_cases!==0, only those commu
   };
 
   handleChoixCommune = (e, value, reason) => {
-    console.log("commune onchange  e : " + e);
-    console.log("commune onchange  value : " + value);
-    console.log("commune onchange  reason : " + reason);
+   
   if(value !== null){
 
     console.log("when the value is different to null ")
@@ -328,39 +338,29 @@ handleNbSuspect= (e)=>{
 
 
 
-addWilayaToData = (e)=>{
-
-  const data = this.state.data
-  console.log("event "+e.target.value)
- 
-
-
-/*  data[data.length-1] ={
-    wilaya: value
-  } 
-    this.setState((prevState)=>({
-      data: data
-    
-    }))*/
-    
-
-
-}
-
   render() {
     const { classes } = this.props;
     return (
       <div>
-      
-      <Box display="flex" justifyContent="center" m={1} p={1} bgcolor="background.paper">
+        <LoadingBar
+          height={3}
+          color='#f11946'
+          onRef={ref => (this.LoadingBar = ref)}
+        />
+
+      <Box display="flex" justifyContent="center" m={4} p={1}>
       <Box p={1} >
 
-      <Typography component="h1" variant="h5">
+      <Typography component="h1" variant="h4" color="black"  gutterBottom="true">
               Remplissage des Informations des wilayas et communes affectè 
+            </Typography>
+            <Typography component="h1" variant="subtitle1" gutterBottom="true">
+            this table contain the story of affected communes with the possibility of adding, updating or deleting 
+            any Communes information  
             </Typography>
 
       <MaterialTable
-        title="Wilayas data remplis "
+        title="Remplissage et Traitement d'informations des communes"
         columns={[
         { title: 'Wilayas', field: 'nom_wilaya' ,
         editComponent: props => (
@@ -510,7 +510,7 @@ addWilayaToData = (e)=>{
                                             if(newData.number_confirmed_cases<0)  newData.number_confirmed_cases=0
                                             if(newData.number_recovered<0)  newData.number_recovered=0
                                             if(newData.number_carrier<0)  newData.number_carrier=0
-
+                                          
                                             data.push(newData);
                                             this.setState({ data }, () => resolve());
 
@@ -557,7 +557,8 @@ addWilayaToData = (e)=>{
 
                  
                   const id  = newData.id_commune
-
+                    console.log("oldData id_commune :"+oldData.id_commune)
+                    console.log("newData id_commune :"+newData.id_commune)
                     const number_death = newData.number_death >=0 ?newData.number_death:0
                     const number_suspect = newData.number_suspect>=0 ?newData.number_suspect:0
                     const number_confirmed_cases = newData.number_confirmed_cases>=0 ?newData.number_confirmed_cases:0
@@ -575,14 +576,14 @@ addWilayaToData = (e)=>{
                                             // Success 🎉
                                             console.log(response);
 
-                                            const data = this.state.data;
+                                          
                                             if(newData.number_death<0)  newData.number_death=0
                                             if(newData.number_suspect<0)  newData.number_suspect=0
                                             if(newData.number_confirmed_cases<0)  newData.number_confirmed_cases=0
                                             if(newData.number_recovered<0)  newData.number_recovered=0
                                             if(newData.number_carrier<0)  newData.number_carrier=0
 
-                                          
+                                            const data = this.state.data;
                                             const index = data.indexOf(oldData);
                                             data[index] = newData;
                  
@@ -602,6 +603,7 @@ addWilayaToData = (e)=>{
                                                 console.log(error.response.data);
                                                 console.log(error.response.status);
                                                 console.log(error.response.headers);
+
                                             } else if (error.request) {
 
                                               alert("Incorrect data, please try again")
@@ -629,10 +631,7 @@ addWilayaToData = (e)=>{
             new Promise((resolve, reject) => {
               setTimeout(() => {
                 {
-                  let data = this.state.data;
-                  const index = data.indexOf(oldData);
-                  data.splice(index, 1);
-                  this.setState({ data }, () => resolve());
+               
 
                   const id  = oldData.id_commune
                     const number_death = 0
@@ -647,7 +646,52 @@ addWilayaToData = (e)=>{
                       number_recovered,
                       number_carrier
                     }
-                    this.patchCommune(id,keys)
+                    this.patchCommune(id,keys).then((response) => {
+                                            // Success 🎉
+                                            console.log(response);
+
+                                            let data = this.state.data;
+                                            const index = data.indexOf(oldData);
+                                            data.splice(index, 1);
+                                            this.setState({ data }, () => resolve());
+                                          
+                                    
+                                        
+                                         
+                                            
+
+                                        })
+                                        .catch((error) => {
+                                            // Error 😨
+                                            if (error.response) {
+                                                /*
+                                                * The request was made and the server responded with a
+                                                * status code that falls out of the range of 2xx
+                                                */
+
+                                                alert("Incorrect data, please try again")
+                                                console.log(error.response.data);
+                                                console.log(error.response.status);
+                                                console.log(error.response.headers);
+
+                                            } else if (error.request) {
+
+                                              alert("Incorrect data, please try again")
+                                                /*
+                                                * The request was made but no response was received, `error.request`
+                                                * is an instance of XMLHttpRequest in the browser and an instance
+                                                * of http.ClientRequest in Node.js
+                                                */
+                                                console.log(error.request);
+                                            } else {
+                                              alert("Incorrect data, please try again")
+                                                // Something happened in setting up the request and triggered an Error
+                                                console.log('Error', error.message);
+                                            }
+                                            console.log(error.config);
+                                        });
+
+
                 }
                 resolve()
               }, 1000)
