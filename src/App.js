@@ -22,47 +22,20 @@ import Editor from 'components/MyComponents/Editor'
 import RecipeReviewCard from 'components/MyComponents/RecipeReviewCard'
 
 import Dashboard from 'views/Dashboard/Dashboard'
-import data_wilayas from 'alger_data.json';
+
 
 class App extends React.Component {
 
 
 
  componentDidMount(){
-  /*0:
-  longitude: -0.1869644
-  latitude: 27.9716342
-  nom: "Adrar"
-  id: "1"
-  wilaya_id: "1"
-  code_postal: "01001"
-  */
-  const allData = data_wilayas.map((item)=>item)
-const wilayasSearch = this.findCommuneByWilayas(allData,16)
- const ids = data_wilayas.map( (item)=>item.id)
- const communeName =   data_wilayas.map( (item)=>item.nom)
- 
-
-console.log(this.getAllWilaya(allData))
- }
+  
 
 
-//get all commune of a specific wilayas 
-  findCommuneByWilayas(data,wilayas_num ) {
-  return data.filter((element) => {
-    
-    return element.wilaya_id ==    wilayas_num;
-  })
+
 }
 
 
-//get all commune of a specific wilayas 
-getAllWilaya(data) {
-  return data.filter((element) => {
-    
-    return element.wilaya_id
-  })
-}
  render(){
 
 
@@ -70,7 +43,7 @@ getAllWilaya(data) {
   return (
     <div className="App">
       
- {/* */} <AgentForm />
+ {/* */} <Admin user="redacteur"/>
 
 
 

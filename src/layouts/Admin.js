@@ -39,10 +39,13 @@ const switchRoutes = (
 );
 
 const useStyles = makeStyles(styles);
-
+//be aware when you ^pass some props it will be shown on the rest.<yourprops>
 export default function Admin({ ...rest }) {
   // styles
   const classes = useStyles();
+
+
+  console.log("user: "+rest.user)
   // ref to help us initialize PerfectScrollbar on windows devices
   const mainPanel = React.createRef();
   // states and functions
@@ -95,7 +98,7 @@ export default function Admin({ ...rest }) {
   return (
     <div className={classes.wrapper}>
       <Sidebar
-        routes={routes}
+        routes={routes.filter((prop, key)=>prop.user===rest.user) }
         logoText={"Creative Tim"}
         logo={logo}
         image={image}

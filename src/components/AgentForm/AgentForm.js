@@ -28,6 +28,9 @@ import Typography from "@material-ui/core/Typography";
 import axios from 'axios'
 import LoadingBar from 'react-top-loading-bar';
 
+
+//API call 
+import API from '../../api';
 const styles = {
   cardCategoryWhite: {
     color: "rgba(255,255,255,.62)",
@@ -98,8 +101,8 @@ get All Communes from backend   api
   getCommunes()
 {
 
-  const townsUrl = 'https://cors-anywhere.herokuapp.com/https://corona-watch-api.herokuapp.com/corona-watch-api/v1/geolocation/towns/'
-  return axios.get(townsUrl,{
+  const townsUrl = '/geolocation/towns/'
+  return API.get(townsUrl,{
     headers:{
       Authorization:'Basic YWRtaW46YWRtaW4=',
     
@@ -120,8 +123,8 @@ getWilayas(){
 
   const token = "YWRtaW46YWRtaW4="
   //const headers = { 'Authorization':+' Basic YWRtaW46YWRtaW4=' };
-  const url = 'https://cors-anywhere.herokuapp.com/https://corona-watch-api.herokuapp.com/corona-watch-api/v1/geolocation/states/'
-  return axios.get(url,{
+  const url = 'geolocation/states/'
+  return API.get(url,{
     headers:{
       Authorization:'Basic YWRtaW46YWRtaW4=',
     
@@ -142,7 +145,7 @@ Api calls are made here with their treatement
 */
   componentDidMount() {
 
-    axios.defaults.headers.common['Authorization'] = 'Basic YWRtaW46YWRtaW4=';
+   
     this.LoadingBar.continuousStart()
     Promise.all([this.getWilayas(), this.getCommunes()])
     .then(([all_wilayas, all_commune])  => {
@@ -265,8 +268,8 @@ Displayed data verify the number_death!==0 && number_cases!==0, only those commu
  
 
   patchCommune(id,patchData){
-    const townsUrl = `https://cors-anywhere.herokuapp.com/https://corona-watch-api.herokuapp.com/corona-watch-api/v1/geolocation/towns/${id}`
-    return axios.patch(townsUrl,
+    const townsUrl = `/geolocation/towns/${id}`
+    return API.patch(townsUrl,
       
         patchData
       ,{

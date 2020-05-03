@@ -52,16 +52,8 @@ export default function Dashboard() {
   const classes = useStyles();
   return (
     <div>
-      <Grid xs={12}>
-      <iframe
-              scrolling="no"
-              frameborder="0"
-              allowfullscreen=""
-              style={{ border: "none", width: "600px", height: "500px",marginRight:"50%" }}
-              src="https://e.infogram.com/8871bbdc-b9d7-45bd-a759-50f96ac3e073?parent_url=https%3A%2F%2Fwww.aljazeera.com%2Fnews%2F2020%2F01%2Fcountries-confirmed-cases-coronavirus-200125070959786.html&amp;src=embed#async_embed"
-              title="مناطق  انتشار كورونا حول العالم"
-            ></iframe>
-      </Grid>
+     <Typography>Dashboard Redacteur </Typography>
+
 
       {/*<GridContainer>
         <GridItem xs={12} sm={6} md={3}>

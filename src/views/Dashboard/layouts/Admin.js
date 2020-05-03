@@ -96,8 +96,10 @@ export default function Admin({ ...rest }) {
     <div className={classes.wrapper}>
      
       <div className={classes.mainPanel} ref={mainPanel}>
+      {console.log("routes"+routes.filter((prop, key)=>prop.user==="redacteur"))}
         <Navbar
-          routes={routes}
+     
+          routes={routes.filter((prop, key)=>prop.user==="redacteur")}
           handleDrawerToggle={handleDrawerToggle}
           {...rest}
         />

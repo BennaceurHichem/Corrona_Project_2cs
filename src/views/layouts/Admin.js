@@ -14,7 +14,7 @@ import FixedPlugin from "./node_modules/components/FixedPlugin/FixedPlugin.js.js
 import routes from "./node_modules/routes.js.js.js";
 
 import styles from "./node_modules/assets/jss/material-dashboard-react/layouts/adminStyle.js.js.js";
-
+import agentRoutes from './agentRoutes'
 import bgImage from "./node_modules/assets/img/sidebar-2.jpg";
 import logo from "./node_modules/assets/img/reactlogo.png";
 
@@ -34,7 +34,7 @@ const switchRoutes = (
       }
       return null;
     })}
-    <Redirect from="/admin" to="/admin/dashboard" />
+    <Redirect from="/agent" to="/admin/dashboard" />
   </Switch>
 );
 

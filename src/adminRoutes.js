@@ -38,19 +38,14 @@ import RTLPage from "views/RTLPage/RTLPage.js";
 import VideoLibraryIcon from '@material-ui/icons/VideoLibrary';
 import TheatersIcon from '@material-ui/icons/Theaters';
 import VideosList from 'views/VideosList/VideosList'
-
-import DashboardRedacteur from 'views/Dashboard/DashboardRedacteur'
-import DashboardAgent from 'views/Dashboard/DashboardAgent'
-
 const dashboardRoutes = [
   {
     path: "/dashboard",
-    name: "Dashboard",
+    name: "Dashboard Admin",
     rtlName: "لوحة القيادة",
     icon: Dashboard,
     component: DashboardPage,
-    layout: "/admin",
-    user:"admin"
+    layout: "/admin"
   },
   {
     path: "/user",
@@ -68,63 +63,6 @@ const dashboardRoutes = [
     component: VideosList,
     layout: "/admin"
   },
-
-  {
-    path: "/dashboardagent",
-    name: "Dashboard Agent",
-    rtlName: "لوحة القيادة",
-    icon: Dashboard,
-    component: DashboardAgent,
-    layout: "/admin",
-    user:"agent_sante"
-  },
-  {
-    path: "/user",
-    name: "User Profile",
-    rtlName: "ملف تعريفي للمستخدم",
-    icon: Person,
-    component: UserProfile,
-    layout: "/admin"
-  },
-{
-    path: "/videos",
-    name: "Videos Reçus",
-    rtlName:" الفيديوهات ",
-    icon: TheatersIcon,
-    component: VideosList,
-    layout: "/admin"
-  },
-
-  {
-    path: "/dashboardredacteur",
-    name: "Dashboard Redacteur",
-    rtlName: "لوحة القيادة",
-    icon: Dashboard,
-    component: DashboardRedacteur,
-    layout: "/admin",
-    user:"redacteur"
-  },
-  {
-    path: "/user",
-    name: "User Profile",
-    rtlName: "ملف تعريفي للمستخدم",
-    icon: Person,
-    component: UserProfile,
-    layout: "/admin"
-  },
-{
-    path: "/videos",
-    name: "Videos Reçus",
-    rtlName:" الفيديوهات ",
-    icon: TheatersIcon,
-    component: VideosList,
-    layout: "/admin"
-  },
-
-
-
-
-
   /*{
     path: "/typography",
     name: "Typography",
@@ -157,14 +95,14 @@ const dashboardRoutes = [
     component: NotificationsPage,
     layout: "/admin"
   },
-  /*{
+  {
     path: "/rtl-page",
     name: "RTL Support",
     rtlName: "دعم اللغة العربية ",
     icon: Language,
     component: RTLPage,
     layout: "/rtl"
-  },*/
+  },
  /* {
     path: "/upgrade-to-pro",
     name: "Upgrade To PRO",
