@@ -10,15 +10,30 @@ import CardHeader from "components/Card/CardHeader.js";
 import CardBody from "components/Card/CardBody.js";
 
 import CardVideo from 'components/Card/CardVideo.js'
+import CardMedia from '@material-ui/core/CardMedia';
+import { isConstructorDeclaration } from "typescript";
 
 
-export default function TableList() {
-  return (
-    <GridContainer>
-      <GridItem xs={12} sm={12} md={12}>
-      <CardVideo title="corona article" description="Stay aware of the latest information on the COVID-19 outbreak, available on the WHO website and through your national and local public health authority. Most people who become infected experience mild illness and recover, but it can be more severe for others. Take care of your health and protect others by doing the following:" maxWidth="400px"/>
+export default class  VideosList extends React.Component{
 
-      </GridItem>
-    </GridContainer>
-  );
+  constructor(props){
+    super(props)
+
+
+
+  }
+  render(){
+  
+    return (
+      <GridContainer>
+        <GridItem xs={12} sm={12} md={12}>
+        <CardVideo  id={this.props.id} title={this.props.title? this.props.title:"مقال حول كورونا "} content={this.props.content?this.props.content:"مضمون مقال كورونا "} image={this.props.image?this.props.image:"https://corona-watch-api.herokuapp.com/uploads/62422326_1424531601033075_6778511987220414464_o.jpg"} date={this.props.date?this.props.date.toString():"12-12-20"} />
+  
+        </GridItem>
+      </GridContainer>
+    );
+
+
+  }
+ 
 }

@@ -38,7 +38,9 @@ import RTLPage from "views/RTLPage/RTLPage.js";
 import VideoLibraryIcon from '@material-ui/icons/VideoLibrary';
 import TheatersIcon from '@material-ui/icons/Theaters';
 import VideosList from 'views/VideosList/VideosList'
-
+//article component 
+import RedactionArticle from 'views/Article/RedactionArticle'
+import ArticleValidation from 'views/Article/ArticleValidation'
 import DashboardRedacteur from 'views/Dashboard/DashboardRedacteur'
 import DashboardAgent from 'views/Dashboard/DashboardAgent'
 import AgentForm from 'components/AgentForm/AgentForm'
@@ -75,7 +77,7 @@ const dashboardRoutes = [
     name: "Validation des articles ",
     rtlName:" قبول المقالات ",
     icon: TheatersIcon,
-    component: VideosList,
+    component: ArticleValidation,
     layout: "/admin",
     user:"admin"
 
@@ -119,17 +121,28 @@ const dashboardRoutes = [
     user:"redacteur",
     
   },
-  
+
   {
+    path: "/writearticle",
+    name: "Writing article ",
+    rtlName: "كتابة المقال",
+    icon: Dashboard,
+    component: RedactionArticle,
+    layout: "/redacteur",
+    user:"redacteur",
+    
+  },
+  
+  /*{
     path: "/createarticle",
-    name: "Dashboard Redacteur",
-    rtlName: "لوحة القيادة",
+    name: "Redaction article",
+    rtlName: "كتابة المقال",
     icon: Dashboard,
     //need to create a component for creating article 
     component: DashboardRedacteur,
     layout: "/redacteur",
     user:"redacteur"
-  },
+  },*/
 
 
 

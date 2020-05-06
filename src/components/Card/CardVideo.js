@@ -18,9 +18,10 @@ import MoreVertIcon from "@material-ui/icons/MoreVert";
 import IconButton from "@material-ui/core/IconButton";
 import Collapse from "@material-ui/core/Collapse";
 import clsx from "clsx";
+import defaultImage from 'assets/img/not_found.png'
+import LoadingBar from 'react-top-loading-bar';
 
-
-
+import API from '../../api'
 
 //<CardVideo title="corona article" description="Stay aware of the latest information on the COVID-19 outbreak, available on the WHO website and through your national and local public health authority. Most people who become infected experience mild illness and recover, but it can be more severe for others. Take care of your health and protect others by doing the following:" maxWidth="400px"/>
 
@@ -43,45 +44,129 @@ export default function CardVideo(props) {
   }));
 
   const [expanded, setExpanded] = React.useState(false);
+  const [showButtons, setShowButtons] = React.useState(true)
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
 
   const classes = useStyles();
-  const { title, description, url } = props;
+  //this is the passed props from the parent which xontaine all data needed for an article 
+  const { title, content, image,date,id } = props;
+
+
+
+
+ const handleValidation = (e)=>{
+  
+  const updateArticle = `feeds/articles/update/${id}`
+  const data ={
+    id:id,
+    is_validated:true
+
+  }
+
+ API.patch(updateArticle,
+     
+   data
+ ,{
+ headers:{
+   Authorization:'Basic YWRtaW46YWRtaW4=',
+ 
+   'Accept': 'application/json',
+   'Content-Type': 'application/json;charset=utf-8',
+ }
+}).then(res=>{
+  setShowButtons(false)
+  alert("تم قبول المقال بنجاح ! ")
+
+}).catch(err=>{
+alert("ERROR WHILE UPDATING ARTICLE ! "+err)
+
+})
+    
+  }
+  const handleDeletion = (e)=>{
+
+    const updateArticle = `feeds/articles/update/${id}`
+    const data ={
+      id:id,
+      is_deleted:true,
+      is_validated:false,
+
+ 
+    }
+
+
+   API.patch(updateArticle,
+       
+     data
+   ,{
+   headers:{
+     Authorization:'Basic YWRtaW46YWRtaW4=',
+   
+     'Accept': 'application/json',
+     'Content-Type': 'application/json;charset=utf-8',
+   }
+ }).then(res=>{
+
+
+    alert("لقد تم رفض المقال بنجاح ! ")
+    setShowButtons(false)
+ }).catch(err=>{
+
+
+  alert("ERROR WHILE UPDATING ARTICLE ! "+err)
+
+ })
+    
+  }
   return (
+
+  
+      <>
+
+          
     <Card className={classes.root}>
       <CardActionArea>
-        <ReactPlayer
-          width="100%"
+        <img
+          width="50%"
           height="200px"
-          url={
-            props.url
-              ? props.url
-              : "https://www.youtube.com/watch?v=ysz5S6PUM-U"
+          src={
+            defaultImage
           }
+          title="Image"
         />
         <CardContent>
           <Typography gutterBottom variant="h5" component="h4">
-            {props.title
-              ? props.title
-              : "This is a default title  of this videos "}
+            {title
+              ? title
+              : "العنوان"}
           </Typography>
+          <Typography variant="body2"
+            color="textSecondary"
+            component="h4"
+            style={{ position: "inherit" }}>{date? date:"تاريخ الكتابة غير متوفر "}</Typography>
        
         </CardContent>
       </CardActionArea>
       <CardActions disableSpacing>
         <Box justify-content="center" margin="auto">
-          <Button size="small">
-            <CheckIcon style={{ color: green[500] }}></CheckIcon>
-            Accept
+          {showButtons &&
+              <>
+            <Button onClick={e=>handleValidation(e)} size="small">
+
+          <CheckIcon style={{ color: green[500] }}></CheckIcon>
+          قبول المقال
           </Button>
-          <Button size="small">
-            <CloseIcon style={{ color: red[500] }}></CloseIcon>
-            Refuse
+          <Button onClick={e=>handleDeletion(e)}size="small">
+          <CloseIcon style={{ color: red[500] }}></CloseIcon>
+          رفض المقال
           </Button>
 
+            </>
+
+          }
           <IconButton
             className={clsx(classes.expand, {
               [classes.expandOpen]: expanded
@@ -99,21 +184,24 @@ export default function CardVideo(props) {
             <Typography variant="body2"
             color="textSecondary"
             component="h4"
-            style={{ position: "inherit" }}>Article content:</Typography>
+            style={{ position: "inherit" }}>مضمون المقال:</Typography>
+           
               <Typography
             variant="body2"
             color="textSecondary"
             component="p"
             style={{ position: "inherit" }}
           >
-            {props.description
-              ? props.description
-              : "This is a default Text description of this videos "}
+            {content
+              ? content
+              : " المقال "}
           </Typography>
          
           </CardContent>
         </Collapse>
      
     </Card>
+  
+</>
   );
 }
