@@ -2,28 +2,28 @@ import React from "react";
 import { Switch, Route, Redirect } from "react-router-dom";
 // creates a beautiful scrollbar
 import PerfectScrollbar from "perfect-scrollbar";
-import "./node_modules/perfect-scrollbar/css/perfect-scrollbar.css";
+import "perfect-scrollbar/css/perfect-scrollbar.css";
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
 // core components
-import Navbar from "./node_modules/components/Navbars/Navbar.js.js.js";
-import Footer from "./node_modules/components/Footer/Footer.js.js.js";
-import Sidebar from "./node_modules/components/Sidebar/Sidebar.js.js.js";
-import FixedPlugin from "./node_modules/components/FixedPlugin/FixedPlugin.js.js.js";
+import Navbar from "components/Navbars/Navbar.js";
+import Footer from "components/Footer/Footer.js";
+import Sidebar from "components/Sidebar/Sidebar.js";
+import FixedPlugin from "components/FixedPlugin/FixedPlugin.js";
 
-import routes from "./node_modules/routes.js.js.js";
+import routes from "routes.js";
 
-import styles from "./node_modules/assets/jss/material-dashboard-react/layouts/adminStyle.js.js.js";
-import agentRoutes from './agentRoutes'
-import bgImage from "./node_modules/assets/img/sidebar-2.jpg";
-import logo from "./node_modules/assets/img/reactlogo.png";
+import styles from "assets/jss/material-dashboard-react/layouts/adminStyle.js";
+
+import bgImage from "assets/img/sidebar-2.jpg";
+import logo from "assets/img/reactlogo.png";
 
 let ps;
 
 const switchRoutes = (
   <Switch>
     {routes.map((prop, key) => {
-      if (prop.layout === "/admin") {
+      if (prop.layout === "/agent") {
         return (
           <Route
             path={prop.layout + prop.path}
@@ -34,22 +34,27 @@ const switchRoutes = (
       }
       return null;
     })}
-    <Redirect from="/admin" to="/admin/dashboard" />
+    <Redirect from="/agent" to="/agent/dashboard" />
   </Switch>
 );
 
 const useStyles = makeStyles(styles);
-
+//be aware when you ^pass some props it will be shown on the rest.<yourprops>
 export default function Admin({ ...rest }) {
   // styles
   const classes = useStyles();
+
+
+  console.log("user: "+user)
   // ref to help us initialize PerfectScrollbar on windows devices
   const mainPanel = React.createRef();
   // states and functions
   const [image, setImage] = React.useState(bgImage);
-  const [color, setColor] = React.useState("blue");
+  const [color, setColor] = React.useState("white");
   const [fixedClasses, setFixedClasses] = React.useState("dropdown show");
   const [mobileOpen, setMobileOpen] = React.useState(false);
+  const [user, setUser] = React.useState("agent");
+
   const handleImageClick = image => {
     setImage(image);
   };
@@ -67,7 +72,7 @@ export default function Admin({ ...rest }) {
     setMobileOpen(!mobileOpen);
   };
   const getRoute = () => {
-    return window.location.pathname !== "/admin/maps";
+    return window.location.pathname !== "/agent/maps";
   };
   const resizeFunction = () => {
     if (window.innerWidth >= 960) {
@@ -95,9 +100,9 @@ export default function Admin({ ...rest }) {
   return (
     <div className={classes.wrapper}>
       <Sidebar
-        routes={routes.filter(item=>item.user==="admin")}
-        logoText={"Admin Dahboard"}
-        user={rest.user}
+     routes={routes.filter(item=>item.user==="agent")}
+        user="agent"
+        logoText={"Creative Tim"}
         logo={logo}
         image={image}
         handleDrawerToggle={handleDrawerToggle}
@@ -107,7 +112,7 @@ export default function Admin({ ...rest }) {
       />
       <div className={classes.mainPanel} ref={mainPanel}>
         <Navbar
-          routes={routes.filter(item=>item.user==="admin")}
+ routes={routes.filter(item=>item.user==="agent")}
           handleDrawerToggle={handleDrawerToggle}
           {...rest}
         />
@@ -119,15 +124,7 @@ export default function Admin({ ...rest }) {
         ) : (
           <div className={classes.map}>{switchRoutes}</div>
         )}
-        {getRoute() ? <Footer /> : null}
-        <FixedPlugin
-          handleImageClick={handleImageClick}
-          handleColorClick={handleColorClick}
-          bgColor={color}
-          bgImage={image}
-          handleFixedClick={handleFixedClick}
-          fixedClasses={fixedClasses}
-        />
+    
       </div>
     </div>
   );

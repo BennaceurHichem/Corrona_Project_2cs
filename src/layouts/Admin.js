@@ -45,7 +45,7 @@ export default function Admin({ ...rest }) {
   const classes = useStyles();
 
 
-  console.log("user: "+rest.user)
+  console.log("user: "+user)
   // ref to help us initialize PerfectScrollbar on windows devices
   const mainPanel = React.createRef();
   // states and functions
@@ -53,6 +53,8 @@ export default function Admin({ ...rest }) {
   const [color, setColor] = React.useState("white");
   const [fixedClasses, setFixedClasses] = React.useState("dropdown show");
   const [mobileOpen, setMobileOpen] = React.useState(false);
+  const [user, setUser] = React.useState(rest.user);
+
   const handleImageClick = image => {
     setImage(image);
   };
@@ -98,7 +100,8 @@ export default function Admin({ ...rest }) {
   return (
     <div className={classes.wrapper}>
       <Sidebar
-        routes={routes.filter((prop, key)=>prop.user===rest.user) }
+        routes={routes}
+        user="admin"
         logoText={"Creative Tim"}
         logo={logo}
         image={image}

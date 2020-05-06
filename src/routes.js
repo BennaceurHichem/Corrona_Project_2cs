@@ -41,7 +41,7 @@ import VideosList from 'views/VideosList/VideosList'
 
 import DashboardRedacteur from 'views/Dashboard/DashboardRedacteur'
 import DashboardAgent from 'views/Dashboard/DashboardAgent'
-
+import AgentForm from 'components/AgentForm/AgentForm'
 const dashboardRoutes = [
   {
     path: "/dashboard",
@@ -58,7 +58,8 @@ const dashboardRoutes = [
     rtlName: "ملف تعريفي للمستخدم",
     icon: Person,
     component: UserProfile,
-    layout: "/admin"
+    layout: "/admin",
+    user:"admin"
   },
 {
     path: "/videos",
@@ -66,25 +67,37 @@ const dashboardRoutes = [
     rtlName:" الفيديوهات ",
     icon: TheatersIcon,
     component: VideosList,
-    layout: "/admin"
+    layout: "/admin",
+    user:"admin"
   },
+  {
+    path: "/articlevalidation",
+    name: "Validation des articles ",
+    rtlName:" قبول المقالات ",
+    icon: TheatersIcon,
+    component: VideosList,
+    layout: "/admin",
+    user:"admin"
 
+  },
   {
     path: "/dashboardagent",
     name: "Dashboard Agent",
     rtlName: "لوحة القيادة",
     icon: Dashboard,
     component: DashboardAgent,
-    layout: "/admin",
-    user:"agent_sante"
+    layout: "/agent",
+    user:"agent"
   },
   {
-    path: "/user",
-    name: "User Profile",
-    rtlName: "ملف تعريفي للمستخدم",
+    path: "/dataentry",
+    name: "Remplissage d'information",
+    rtlName: "إدخال المعلومات ",
     icon: Person,
-    component: UserProfile,
-    layout: "/admin"
+    //need to be changed 
+    component: AgentForm,
+    layout: "/agent",
+    user:"agent"
   },
 {
     path: "/videos",
@@ -92,7 +105,8 @@ const dashboardRoutes = [
     rtlName:" الفيديوهات ",
     icon: TheatersIcon,
     component: VideosList,
-    layout: "/admin"
+    layout: "/admin",
+    user:"admin"
   },
 
   {
@@ -101,25 +115,23 @@ const dashboardRoutes = [
     rtlName: "لوحة القيادة",
     icon: Dashboard,
     component: DashboardRedacteur,
-    layout: "/admin",
+    layout: "/redacteur",
+    user:"redacteur",
+    
+  },
+  
+  {
+    path: "/createarticle",
+    name: "Dashboard Redacteur",
+    rtlName: "لوحة القيادة",
+    icon: Dashboard,
+    //need to create a component for creating article 
+    component: DashboardRedacteur,
+    layout: "/redacteur",
     user:"redacteur"
   },
-  {
-    path: "/user",
-    name: "User Profile",
-    rtlName: "ملف تعريفي للمستخدم",
-    icon: Person,
-    component: UserProfile,
-    layout: "/admin"
-  },
-{
-    path: "/videos",
-    name: "Videos Reçus",
-    rtlName:" الفيديوهات ",
-    icon: TheatersIcon,
-    component: VideosList,
-    layout: "/admin"
-  },
+
+
 
 
 

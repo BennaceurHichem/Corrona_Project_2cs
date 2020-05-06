@@ -27,13 +27,12 @@ export default function Sidebar(props) {
   }
 
   //props given by the parent component 
-  const { color, logo, image, logoText, routes } = props;
-
-
+  const { color, logo, image, logoText, routes,user} = props;
+console.log("all routes "+routes.filter(item=>item.user===user).map(item=>console.log(Object.keys(item))))
 
   var links = (
     <List className={classes.list}>
-      {routes.map((prop, key) => {
+      {routes.filter(item=>item.user===user).map((prop, key) => {
         var activePro = " ";
         var listItemClasses;
         if (prop.path === "/upgrade-to-pro") {
@@ -49,6 +48,8 @@ export default function Sidebar(props) {
         const whiteFontClasses = classNames({
           [" " + classes.whiteFont]: activeRoute(prop.layout + prop.path)
         });
+
+
         return (
           <NavLink
             to={prop.layout + prop.path}

@@ -22,6 +22,9 @@ import { Router, Route, Switch, Redirect } from "react-router-dom";
 
 // core components
 import Admin from "layouts/Admin.js";
+import Agent from "layouts/Agent.js";
+import Redacteur from "layouts/Redacteur.js";
+
 import Dashboard from "views/Dashboard/Dashboard";
 import RTL from "layouts/RTL.js";
 
@@ -51,6 +54,8 @@ ReactDOM.render(
    
     <Switch>
       <Route path="/admin" component={Admin} />
+      <Route path="/agent" component={Agent} />
+      <Route path="/redacteur" component={Redacteur} />
       <Route path="/rtl" component={RTL} />
       
 

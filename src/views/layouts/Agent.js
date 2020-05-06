@@ -23,7 +23,7 @@ let ps;
 const switchRoutes = (
   <Switch>
     {routes.map((prop, key) => {
-      if (prop.layout === "/admin") {
+      if (prop.layout === "/agent") {
         return (
           <Route
             path={prop.layout + prop.path}
@@ -34,13 +34,13 @@ const switchRoutes = (
       }
       return null;
     })}
-    <Redirect from="/admin" to="/admin/dashboard" />
+    <Redirect from="/agent" to="/agent/dashboard" />
   </Switch>
 );
 
 const useStyles = makeStyles(styles);
 
-export default function Admin({ ...rest }) {
+export default function Agent({ ...rest }) {
   // styles
   const classes = useStyles();
   // ref to help us initialize PerfectScrollbar on windows devices
@@ -95,8 +95,8 @@ export default function Admin({ ...rest }) {
   return (
     <div className={classes.wrapper}>
       <Sidebar
-        routes={routes.filter(item=>item.user==="admin")}
-        logoText={"Admin Dahboard"}
+        routes={routes.filter(item=>item.user==="agent")}
+        logoText={"Creative Tim"}
         user={rest.user}
         logo={logo}
         image={image}
@@ -107,7 +107,7 @@ export default function Admin({ ...rest }) {
       />
       <div className={classes.mainPanel} ref={mainPanel}>
         <Navbar
-          routes={routes.filter(item=>item.user==="admin")}
+          routes={routes.filter(item=>item.user==="agent")}
           handleDrawerToggle={handleDrawerToggle}
           {...rest}
         />

@@ -99,7 +99,7 @@ export default function Admin({ ...rest }) {
       {console.log("routes"+routes.filter((prop, key)=>prop.user==="redacteur"))}
         <Navbar
      
-          routes={routes.filter((prop, key)=>prop.user==="redacteur")}
+          routes={routes}
           handleDrawerToggle={handleDrawerToggle}
           {...rest}
         />
