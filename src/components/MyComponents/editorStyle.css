@@ -4,7 +4,7 @@ body {
   }
   
   .app {
-    margin: 1rem 4rem;
+
   }
   
   .app .ql-container {
@@ -35,3 +35,14 @@ body {
     margin-top: 0.5em;
     font-size: small;
   }
+
+  p{
+    position: initial;
+    width: 100%;
+    bottom: 80px;
+    font-size: 12px;
+    color: rgb(0, 0, 0);
+    box-shadow: black;
+    margin-top: 2px;
+  }
+  

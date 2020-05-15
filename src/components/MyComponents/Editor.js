@@ -6,11 +6,16 @@ import ReactHtmlParser from 'react-html-parser'
 
 import CKEditor from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+
 import TextField from '@material-ui/core/TextField';
 import Input from '@material-ui/core/Input';
-
 import API from  '../../api';
 import Button from '@material-ui/core/Button';
+import './editorStyle.css'
+import LoadingBar from 'react-top-loading-bar';
+
+//import ClassicEditor from '@ckeditor/ckeditor5-editor-classic/src/classiceditor.js';
+
 
 class Editor extends React.Component{
 
@@ -23,7 +28,7 @@ class Editor extends React.Component{
       value: '',
       parsedValue:'' ,
     title:'',
-    attachment:null,
+    file:null,
     publication_date:null,
     result:null
   
@@ -44,14 +49,16 @@ class Editor extends React.Component{
 
   fileSelectedListener = (e)=>{
       console.log( e.target.files[0])
-      const attachment  =  e.target.files[0];
-  
+      const file  =  e.target.files[0];
+
       this.setState({
 
-        attachment: attachment
+        file: file
       });
   }
   handleSubmit = (e)=>{
+    e.preventDefault();
+    const token ='YWRtaW46YWRtaW4='
 
     var publication_date  = new  Date().toISOString().slice(0, 19).replace('T', ' ');
 
@@ -59,49 +66,34 @@ class Editor extends React.Component{
       publication_date
     })
 
-    /*
- "attachment": {
-            "id": 1,
-            "nom": "test",
-            "extension": "image",
-            "file": "https://corona-watch-api.herokuapp.com/uploads/62422326_1424531601033075_6778511987220414464_o.jpg",
-            "date": "2020-05-03T00:20:16.906879Z"
-        },
-
-    */
-  /*  "id": 1,
-      "nom": this.state.attachment? this.state.attachment.name: "image",
-      "extension": "image",
-      "file": `https://corona-watch-api.herokuapp.com/uploads/${ this.state.attachment? this.state.attachment.name: "image"}`,
-      "date": this.state.publication_date*/
-    const attachment =  {
-      "id": 1,
-      "nom": this.state.attachment? this.state.attachment.name: "image",
-      "extension": "image",
-      "file":"https://corona-watch-api.herokuapp.com/uploads/62422326_1424531601033075_6778511987220414464_o.jpg",
-      "date": this.state.publication_date
+   const attachment =  {
+      
+      "nom": this.state.file? this.state.file.name: "image",
+      "file":this.state.file,
+   
   
   }
    
-    const postedData={
-        title: this.state.title,
-        content: this.state.value,
-        attachment: attachment,
-        publication_date:publication_date,
-        editor:1
+  //thi is for the attachment only 
+  const attachmentFormData = new FormData();
+  attachmentFormData.append("nom", this.state.file? this.state.file.name: "image");
+  attachmentFormData.append("extension", "image");
+
+  const fd  =  new FormData();
+
+  
+ // attachmentFormData.append("file", attachment, attachment.name);
+  fd.append("attachment",this.state.file)
+  fd.append("title",this.state.title)
+  fd.append("content",this.state.value)
+  fd.append("editor",1)
+  fd.append("attachment.nom", this.state.file.name);
+  fd.append("attachment.extension.", "image");
+  fd.append("attachment.file", this.state.file, this.state.file.name);
+  fd.append("publication_date",publication_date);
 
 
-
-
-    }
-      const fd  =  new FormData();
-
-
-      fd.append("attachment",attachment)
-      fd.append("title",this.state.title)
-      fd.append("content",this.state.value)
-      fd.append("publication_date",publication_date)
-      fd.append("editor",1)
+    
 
       console.log(fd)
       this.setState({
@@ -112,13 +104,11 @@ class Editor extends React.Component{
 
       API.post(articleURL,
       
-        postedData
+        fd
       ,{
       headers:{
-        Authorization:'Basic YWRtaW46YWRtaW4=',
-      
-        'Accept': 'application/json',
-        'Content-Type': 'application/json;charset=utf-8',
+        Authorization:'Basic '+token,
+        Accept: "application/json"
       }
     }).then((res)=>{
 
@@ -167,6 +157,17 @@ class Editor extends React.Component{
     <CKEditor
       editor={ClassicEditor}
       data="أكتب مقالك هنا  !"
+      
+      config={{
+        language: {
+            // The UI will be English.
+            ui: 'ar',
+
+            // But the content will be edited in Arabic.
+            content: 'ar'
+        }
+        
+      }}
       onInit={editor => {
         // You can store the "editor" and use when it is needed.
         console.log("Editor is ready to use!", editor);
@@ -186,6 +187,8 @@ class Editor extends React.Component{
       onFocus={(event, editor) => {
         console.log("Focus.", editor);
       }}
+      
+        
     />
   
     <div>
@@ -210,3 +213,4 @@ class Editor extends React.Component{
 
 
 export default Editor ;
+
