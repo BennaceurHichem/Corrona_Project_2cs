@@ -102,7 +102,7 @@ export default function Admin({ ...rest }) {
       <Sidebar
         routes={routes}
         user="admin"
-        logoText={"Creative Tim"}
+        logoText={"Admin Dahboard"}
         logo={logo}
         image={image}
         handleDrawerToggle={handleDrawerToggle}

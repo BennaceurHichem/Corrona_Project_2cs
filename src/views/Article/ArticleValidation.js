@@ -91,7 +91,7 @@ componentDidMount(){
             success:true
         })
 
-      alert("SUCCESS !")
+    
     }).catch((err)=>{
 
       this.LoadingBar.decrease(100)
@@ -117,7 +117,14 @@ componentDidMount(){
                                 />
                         {this.state.success &&
                             this.state.articles.map((item)=>
-                                 <VideosList  id={item.id} title={item.title} content={item.content} image={item.image} date={item.publication_date}/>
+                                 <VideosList 
+                                  id={item.id} 
+                                  title={item.title}
+                                   content={item.content} 
+                                 image={item.image} 
+                                 date={item.publication_date} 
+                                 isValidated={item.is_validated? true:false} 
+                                 isDeleted={item.is_deleted? true:false}/>
                             
                             
                             )

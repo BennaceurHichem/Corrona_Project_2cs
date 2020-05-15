@@ -96,7 +96,7 @@ export default function Agent({ ...rest }) {
     <div className={classes.wrapper}>
       <Sidebar
         routes={routes.filter(item=>item.user==="agent")}
-        logoText={"Creative Tim"}
+        logoText={"Agent de santè Dahboard "}
         user={rest.user}
         logo={logo}
         image={image}

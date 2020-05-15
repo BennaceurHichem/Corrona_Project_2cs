@@ -52,7 +52,7 @@ export default function CardVideo(props) {
 
   const classes = useStyles();
   //this is the passed props from the parent which xontaine all data needed for an article 
-  const { title, content, image,date,id } = props;
+  const { title, content, image,date,id ,isValidated,isDeleted} = props;
 
 
 
@@ -143,10 +143,14 @@ alert("ERROR WHILE UPDATING ARTICLE ! "+err)
               ? title
               : "العنوان"}
           </Typography>
-          <Typography variant="body2"
+          <Typography variant="h6"
             color="textSecondary"
-            component="h4"
+            component="h6"
             style={{ position: "inherit" }}>{date? date:"تاريخ الكتابة غير متوفر "}</Typography>
+             <Typography variant="h6"
+            color="textSecondary"
+            component="h6"
+            style={{ position: "inherit" }}>{isValidated ?"حالة المقال مقبول ":"حالة المقال :غير مقبول "}</Typography>
        
         </CardContent>
       </CardActionArea>
@@ -154,16 +158,20 @@ alert("ERROR WHILE UPDATING ARTICLE ! "+err)
         <Box justify-content="center" margin="auto">
           {showButtons &&
               <>
-            <Button onClick={e=>handleValidation(e)} size="small">
+            {!isValidated &&
+              <Button onClick={e=>handleValidation(e)} size="small">
+                <CheckIcon style={{ color: green[500] }}></CheckIcon>
+              قبول المقال
+              </Button>
 
-          <CheckIcon style={{ color: green[500] }}></CheckIcon>
-          قبول المقال
-          </Button>
-          <Button onClick={e=>handleDeletion(e)}size="small">
-          <CloseIcon style={{ color: red[500] }}></CloseIcon>
-          رفض المقال
-          </Button>
 
+            }
+            {isValidated &&
+                  <Button onClick={e=>handleDeletion(e)}size="small">
+                   <CloseIcon style={{ color: red[500] }}></CloseIcon>
+                       رفض المقال
+                  </Button>
+            }
             </>
 
           }

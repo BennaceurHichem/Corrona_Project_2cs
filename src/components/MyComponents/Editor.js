@@ -101,7 +101,8 @@ class Editor extends React.Component{
       })
 
       const articleURL = 'feeds/articles/'
-
+   
+      this.LoadingBar.continuousStart()
       API.post(articleURL,
       
         fd
@@ -111,6 +112,8 @@ class Editor extends React.Component{
         Accept: "application/json"
       }
     }).then((res)=>{
+
+      this.LoadingBar.complete()
 
       alert("SUCCESS !")
     }).catch((err)=>{
@@ -129,6 +132,13 @@ class Editor extends React.Component{
 
       return(
         <div className="App">
+
+        <LoadingBar
+          height={3}
+          color='#f11946'
+          onRef={ref => (this.LoadingBar = ref)}
+        />
+
     <h2>Espace Rèdaction d'articles </h2>
 
 

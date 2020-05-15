@@ -54,7 +54,7 @@ const dashboardRoutes = [
     layout: "/admin",
     user:"admin"
   },
-  {
+  /*{
     path: "/user",
     name: "User Profile",
     rtlName: "ملف تعريفي للمستخدم",
@@ -62,8 +62,8 @@ const dashboardRoutes = [
     component: UserProfile,
     layout: "/admin",
     user:"admin"
-  },
-{
+  },*/
+/*{
     path: "/videos",
     name: "Videos Reçus",
     rtlName:" الفيديوهات ",
@@ -72,6 +72,7 @@ const dashboardRoutes = [
     layout: "/admin",
     user:"admin"
   },
+  */
   {
     path: "/articlevalidation",
     name: "Validation des articles ",

@@ -43,9 +43,9 @@ class App extends React.Component {
   return (
     <div className="App">
       
- {/* */} <Admin user="redacteur"/>
-
-
+ {/*  <Admin user="redacteur"/>*/}
+       <MainPage/>
+      
 
           
     </div>

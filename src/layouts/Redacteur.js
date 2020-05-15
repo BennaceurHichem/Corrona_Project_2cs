@@ -102,7 +102,7 @@ export default function Admin({ ...rest }) {
       <Sidebar
          routes={routes.filter(item=>item.user==="redacteur")}
         user="redacteur"
-        logoText={"Creative Tim"}
+        logoText={"Redacteur Dashboard"}
         logo={logo}
         image={image}
         handleDrawerToggle={handleDrawerToggle}

@@ -23,6 +23,18 @@ import { spacing } from "@material-ui/system";
 import { FormikTextField, FormikSelectField } from "formik-material-fields";
 import Icon from "@material-ui/core/Icon";
 import Logo from "assets/img/coronaWatchLogo.png";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect,
+  useHistory,
+  useLocation,
+  withRouter
+} from "react-router-dom";
+
+import history from '../../history'
+
 
 const useStyles = makeStyles(theme => ({
   paper: {
@@ -72,7 +84,23 @@ export default function LoginForm() {
             .required("fill your password to authnticate")
         })}
         onSubmit={fields => {
-          alert("SUCCESS!! :-)\n\n" + JSON.stringify(fields, null, 4));
+          //alert("SUCCESS!! :-)\n\n" + JSON.stringify(fields, null, 4));
+          const email  = fields.email
+          const password = fields.password
+
+          if(email==="admin@coronawatch.com" && password ==="rootroot") {
+            history.push('/admin/dashboard')
+          }    
+          if(email==="redacteur@coronawatch.com"){
+            history.push('/redacteur/dashboardredacteur')
+          }    
+          if(email==="agent@coronawatch.com"){
+               history.push('/agent/dashboardagent') 
+          } 
+          else{
+            alert("usr or password not valid")
+          }
+
         }}
         render={({ status, touched, errors }) => (
           <div className={classes.paper}>

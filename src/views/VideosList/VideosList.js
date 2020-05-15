@@ -27,7 +27,14 @@ export default class  VideosList extends React.Component{
     return (
       <GridContainer>
         <GridItem xs={12} sm={12} md={12}>
-        <CardVideo  id={this.props.id} title={this.props.title? this.props.title:"مقال حول كورونا "} content={this.props.content?this.props.content:"مضمون مقال كورونا "} image={this.props.image?this.props.image:"https://corona-watch-api.herokuapp.com/uploads/62422326_1424531601033075_6778511987220414464_o.jpg"} date={this.props.date?this.props.date.toString():"12-12-20"} />
+        <CardVideo  id={this.props.id} title={this.props.title? this.props.title:"مقال حول كورونا "} 
+        content={this.props.content?this.props.content:"مضمون مقال كورونا "}
+         image={this.props.image?this.props.image:"https://corona-watch-api.herokuapp.com/uploads/62422326_1424531601033075_6778511987220414464_o.jpg"} 
+         date={this.props.date?this.props.date.toString():"12-12-20"} 
+         isValidated={this.props.isValidated? true:false} 
+         isDeleted={this.props.isDeleted? true:false}
+
+         />
   
         </GridItem>
       </GridContainer>
