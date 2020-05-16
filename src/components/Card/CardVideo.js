@@ -133,7 +133,7 @@ alert("ERROR WHILE UPDATING ARTICLE ! "+err)
           width="50%"
           height="200px"
           src={
-            defaultImage
+            image ?image: defaultImage
           }
           title="Image"
         />

@@ -20,7 +20,7 @@ import CustomInput from "components/CustomInput/CustomInput.js";
 import Button from "components/CustomButtons/Button.js";
 
 import styles from "assets/jss/material-dashboard-react/components/headerLinksStyle.js";
-
+import history from '../../history'
 const useStyles = makeStyles(styles);
 
 export default function AdminNavbarLinks() {
@@ -207,7 +207,7 @@ export default function AdminNavbarLinks() {
                     </MenuItem>
                     <Divider light />
                     <MenuItem
-                      onClick={handleCloseProfile}
+                      onClick={()=>history.push('/login')}
                       className={classes.dropdownItem}
                     >
                       Logout

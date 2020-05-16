@@ -69,7 +69,7 @@ class  MainPage extends React.Component  {
               
    
                 <Favorite />
-                التسجيل في الموقع
+                الدخول  للموقع
               </Button>
                 <div id="flip">
                   <div>

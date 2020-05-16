@@ -13,9 +13,8 @@ import API from  '../../api';
 import Button from '@material-ui/core/Button';
 import './editorStyle.css'
 import LoadingBar from 'react-top-loading-bar';
-
 //import ClassicEditor from '@ckeditor/ckeditor5-editor-classic/src/classiceditor.js';
-
+import history from '../../history'
 
 class Editor extends React.Component{
 
@@ -114,12 +113,13 @@ class Editor extends React.Component{
     }).then((res)=>{
 
       this.LoadingBar.complete()
+      alert("لقد تم إؤسال المقال ينجاح")
 
-      alert("SUCCESS !")
+      history.push('/redacteur/writearticle')
     }).catch((err)=>{
 
 
-      alert(err)
+      alert(err+"Verifier la taille de votre image")
     })
 
   }
@@ -201,10 +201,7 @@ class Editor extends React.Component{
         
     />
   
-    <div>
-      <h1>Displayed Text :</h1>
-      {this.state.parsedValue}
-    </div>
+
 
 
     <Button variant="contained" color="primary" onClick={(e)=>this.handleSubmit(e)}>

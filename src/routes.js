@@ -30,6 +30,7 @@ import UserProfile from "views/UserProfile/UserProfile.js";
 import TableList from "views/TableList/TableList.js";
 import Typography from "views/Typography/Typography.js";
 import Icons from "views/Icons/Icons.js";
+
 import Maps from "views/Maps/Maps.js";
 import NotificationsPage from "views/Notifications/Notifications.js";
 import UpgradeToPro from "views/UpgradeToPro/UpgradeToPro.js";
@@ -44,6 +45,8 @@ import ArticleValidation from 'views/Article/ArticleValidation'
 import DashboardRedacteur from 'views/Dashboard/DashboardRedacteur'
 import DashboardAgent from 'views/Dashboard/DashboardAgent'
 import AgentForm from 'components/AgentForm/AgentForm'
+import CreateIcon from '@material-ui/icons/Create';
+import AssignmentTurnedInIcon from '@material-ui/icons/AssignmentTurnedIn';
 const dashboardRoutes = [
   {
     path: "/dashboard",
@@ -77,7 +80,7 @@ const dashboardRoutes = [
     path: "/articlevalidation",
     name: "Validation des articles ",
     rtlName:" قبول المقالات ",
-    icon: TheatersIcon,
+    icon: AssignmentTurnedInIcon,
     component: ArticleValidation,
     layout: "/admin",
     user:"admin"
@@ -102,7 +105,7 @@ const dashboardRoutes = [
     layout: "/agent",
     user:"agent"
   },
-{
+/*{
     path: "/videos",
     name: "Videos Reçus",
     rtlName:" الفيديوهات ",
@@ -111,6 +114,7 @@ const dashboardRoutes = [
     layout: "/admin",
     user:"admin"
   },
+  */
 
   {
     path: "/dashboardredacteur",
@@ -127,7 +131,7 @@ const dashboardRoutes = [
     path: "/writearticle",
     name: "Writing article ",
     rtlName: "كتابة المقال",
-    icon: Dashboard,
+    icon: CreateIcon,
     component: RedactionArticle,
     layout: "/redacteur",
     user:"redacteur",

@@ -91,10 +91,10 @@ export default function LoginForm() {
           if(email==="admin@coronawatch.com" && password ==="rootroot") {
             history.push('/admin/dashboard')
           }    
-          if(email==="redacteur@coronawatch.com"){
+          else if(email==="redacteur@coronawatch.com"){
             history.push('/redacteur/dashboardredacteur')
           }    
-          if(email==="agent@coronawatch.com"){
+          else if(email==="agent@coronawatch.com"){
                history.push('/agent/dashboardagent') 
           } 
           else{

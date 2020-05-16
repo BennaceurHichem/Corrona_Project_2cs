@@ -90,7 +90,8 @@ componentDidMount(){
             articles:res.data,
             success:true
         })
-
+        
+          console.log("files:"+this.state.articles.map(item=> item.attachment.file))
     
     }).catch((err)=>{
 
@@ -121,7 +122,7 @@ componentDidMount(){
                                   id={item.id} 
                                   title={item.title}
                                    content={item.content} 
-                                 image={item.image} 
+                                 image={item.attachment.file} 
                                  date={item.publication_date} 
                                  isValidated={item.is_validated? true:false} 
                                  isDeleted={item.is_deleted? true:false}/>
