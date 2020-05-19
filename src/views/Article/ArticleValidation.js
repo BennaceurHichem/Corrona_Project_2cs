@@ -122,7 +122,7 @@ componentDidMount(){
                                   id={item.id} 
                                   title={item.title}
                                    content={item.content} 
-                                 image={item.attachment.file} 
+                                 image={item.attachment.file_url} 
                                  date={item.publication_date} 
                                  isValidated={item.is_validated? true:false} 
                                  isDeleted={item.is_deleted? true:false}/>

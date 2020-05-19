@@ -20,6 +20,7 @@ import Collapse from "@material-ui/core/Collapse";
 import clsx from "clsx";
 import defaultImage from 'assets/img/not_found.png'
 import LoadingBar from 'react-top-loading-bar';
+import ReactHtmlParser from 'react-html-parser'
 
 import API from '../../api'
 
@@ -201,7 +202,7 @@ alert("ERROR WHILE UPDATING ARTICLE ! "+err)
             style={{ position: "inherit" }}
           >
             {content
-              ? content
+              ? ReactHtmlParser(content)
               : " المقال "}
           </Typography>
          
