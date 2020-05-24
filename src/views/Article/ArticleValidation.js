@@ -95,7 +95,7 @@ componentDidMount(){
     
     }).catch((err)=>{
 
-      this.LoadingBar.decrease(100)
+
       alert(err)
     })
 
@@ -117,7 +117,7 @@ componentDidMount(){
                                     onRef={ref => (this.LoadingBar = ref)}
                                 />
                         {this.state.success &&
-                            this.state.articles.map((item)=>
+                            this.state.articles.filter(item=>!item.is_deleted).map((item)=>
                                  <VideosList 
                                   id={item.id} 
                                   title={item.title}

@@ -88,13 +88,13 @@ export default function LoginForm() {
           const email  = fields.email
           const password = fields.password
 
-          if(email==="admin@coronawatch.com" && password ==="rootroot") {
+          if(email==="admin@corronawatch.com" && password ==="rootroot") {
             history.push('/admin/dashboard')
           }    
-          else if(email==="redacteur@coronawatch.com"){
+          else if(email==="redacteur@corronawatch.com"){
             history.push('/redacteur/dashboardredacteur')
           }    
-          else if(email==="agent@coronawatch.com"){
+          else if(email==="agent@corronawatch.com"){
                history.push('/agent/dashboardagent') 
           } 
           else{

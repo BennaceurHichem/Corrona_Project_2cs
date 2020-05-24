@@ -21,12 +21,22 @@ import clsx from "clsx";
 import defaultImage from 'assets/img/not_found.png'
 import LoadingBar from 'react-top-loading-bar';
 import ReactHtmlParser from 'react-html-parser'
+import { withStyles } from '@material-ui/core/styles';
 
 import API from '../../api'
 
 //<CardVideo title="corona article" description="Stay aware of the latest information on the COVID-19 outbreak, available on the WHO website and through your national and local public health authority. Most people who become infected experience mild illness and recover, but it can be more severe for others. Take care of your health and protect others by doing the following:" maxWidth="400px"/>
 
-export default function CardVideo(props) {
+const styles = {
+  btn: {
+    marginRight:"30px"
+  },
+};
+
+
+
+
+ function CardVideo(props) {
   const useStyles = makeStyles(theme => ({
     root: {
       maxWidth: props.maxWidth ? props.maxWidth : "400",
@@ -41,6 +51,9 @@ export default function CardVideo(props) {
     },
     expandOpen: {
       transform: "rotate(180deg)"
+    },
+    btn:{
+      marginRight:"30px"
     }
   }));
 
@@ -151,7 +164,7 @@ alert("ERROR WHILE UPDATING ARTICLE ! "+err)
              <Typography variant="h6"
             color="textSecondary"
             component="h6"
-            style={{ position: "inherit" }}>{isValidated ?"حالة المقال مقبول ":"حالة المقال :غير مقبول "}</Typography>
+            style={{ position: "inherit" }}>{(isValidated )?"حالة المقال مقبول ":"حالة المقال :لم يتم معالجته بعد "}</Typography>
        
         </CardContent>
       </CardActionArea>
@@ -159,16 +172,20 @@ alert("ERROR WHILE UPDATING ARTICLE ! "+err)
         <Box justify-content="center" margin="auto">
           {showButtons &&
               <>
-            {!isValidated &&
-              <Button onClick={e=>handleValidation(e)} size="small">
-                <CheckIcon style={{ color: green[500] }}></CheckIcon>
+            {!isValidated && !isDeleted &&
+            <>
+              <Button className={classes.btn} onClick={e=>handleValidation(e)} size="small" style={{margin:"30px"}}>
+                <CheckIcon style={{ color: green[500],margin:"30px" }}></CheckIcon>
               قبول المقال
               </Button>
-
-
+              <Button className={classes.btn} onClick={e=>handleDeletion(e)}size="small">
+                   <CloseIcon style={{ color: red[500] }}></CloseIcon>
+                       رفض المقال
+                  </Button>
+                </>
             }
-            {isValidated &&
-                  <Button onClick={e=>handleDeletion(e)}size="small">
+            {isValidated && !isDeleted &&
+                  <Button className={classes.btn} onClick={e=>handleDeletion(e)}size="small">
                    <CloseIcon style={{ color: red[500] }}></CloseIcon>
                        رفض المقال
                   </Button>
@@ -214,3 +231,9 @@ alert("ERROR WHILE UPDATING ARTICLE ! "+err)
 </>
   );
 }
+
+
+
+
+
+export default (CardVideo)
