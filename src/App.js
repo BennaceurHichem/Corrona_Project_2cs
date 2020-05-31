@@ -22,7 +22,7 @@ import Editor from 'components/MyComponents/Editor'
 import RecipeReviewCard from 'components/MyComponents/RecipeReviewCard'
 
 import Dashboard from 'views/Dashboard/Dashboard'
-
+import EmailSend from 'components/MyComponents/EmailSend'
 
 class App extends React.Component {
 
@@ -44,7 +44,7 @@ class App extends React.Component {
     <div className="App">
       
  {/*  <Admin user="redacteur"/>*/}
-       <MainPage/>
+       <EmailSend/>
       
 
           
