@@ -44,7 +44,7 @@ class App extends React.Component {
     <div className="App">
       
  {/*  <Admin user="redacteur"/>*/}
-       <EmailSend/>
+       <MainPage/>
       
 
           

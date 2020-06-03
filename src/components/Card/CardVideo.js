@@ -185,7 +185,7 @@ alert("ERROR WHILE UPDATING ARTICLE ! "+err)
                 </>
             }
             {isValidated && !isDeleted &&
-                  <Button className={classes.btn} onClick={e=>handleDeletion(e)}size="small">
+                  <Button className={classes.btn} onClick={e=>handleDeletion(e)} size="small">
                    <CloseIcon style={{ color: red[500] }}></CloseIcon>
                        رفض المقال
                   </Button>

@@ -96,7 +96,7 @@ export default function Admin({ ...rest }) {
     <div className={classes.wrapper}>
       <Sidebar
         routes={routes.filter(item=>item.user==="admin")}
-        logoText={"Admin Dahboard"}
+        logoText={"Moderateur Dashboard"}
         user={rest.user}
         logo={logo}
         image={image}

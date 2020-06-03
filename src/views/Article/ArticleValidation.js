@@ -117,7 +117,7 @@ componentDidMount(){
                                     onRef={ref => (this.LoadingBar = ref)}
                                 />
                         {this.state.success &&
-                            this.state.articles.filter(item=>!item.is_deleted).map((item)=>
+                            this.state.articles.filter(item=>!item.is_deleted).sort((a, b)=> new Date(b.publication_date)-new Date(a.publication_date) ).map((item)=>
                                  <VideosList 
                                   id={item.id} 
                                   title={item.title}

@@ -47,6 +47,9 @@ import DashboardAgent from 'views/Dashboard/DashboardAgent'
 import AgentForm from 'components/AgentForm/AgentForm'
 import CreateIcon from '@material-ui/icons/Create';
 import AssignmentTurnedInIcon from '@material-ui/icons/AssignmentTurnedIn';
+import AddLocationIcon from '@material-ui/icons/AddLocation';
+import supsectCasesValidation from 'views/SuspectCases/supsectCasesValidation'
+import videosValidation from 'views/videosValidation/videosValidation'
 const dashboardRoutes = [
   {
     path: "/dashboard",
@@ -57,31 +60,33 @@ const dashboardRoutes = [
     layout: "/admin",
     user:"admin"
   },
-  /*{
-    path: "/user",
-    name: "User Profile",
-    rtlName: "ملف تعريفي للمستخدم",
-    icon: Person,
-    component: UserProfile,
-    layout: "/admin",
-    user:"admin"
-  },*/
-/*{
-    path: "/videos",
-    name: "Videos Reçus",
-    rtlName:" الفيديوهات ",
-    icon: TheatersIcon,
-    component: VideosList,
-    layout: "/admin",
-    user:"admin"
-  },
-  */
+
   {
     path: "/articlevalidation",
     name: "Validation des articles ",
     rtlName:" قبول المقالات ",
     icon: AssignmentTurnedInIcon,
     component: ArticleValidation,
+    layout: "/admin",
+    user:"admin"
+
+  },
+  {
+    path: "/casesvalidation",
+    name: "Validation des Cas suspects ",
+    rtlName:" قبول الحالات المطروحة ",
+    icon: AddLocationIcon,
+    component: supsectCasesValidation,
+    layout: "/admin",
+    user:"admin"
+
+  },
+  {
+    path: "/videosvalidation",
+    name: "Validation des Videos ",
+    rtlName:" قبول الفيديوهات ",
+    icon: TheatersIcon,
+    component: videosValidation,
     layout: "/admin",
     user:"admin"
 
@@ -105,6 +110,25 @@ const dashboardRoutes = [
     layout: "/agent",
     user:"agent"
   },
+    /*{
+    path: "/user",
+    name: "User Profile",
+    rtlName: "ملف تعريفي للمستخدم",
+    icon: Person,
+    component: UserProfile,
+    layout: "/admin",
+    user:"admin"
+  },*/
+/*{
+    path: "/videos",
+    name: "Videos Reçus",
+    rtlName:" الفيديوهات ",
+    icon: TheatersIcon,
+    component: VideosList,
+    layout: "/admin",
+    user:"admin"
+  },
+  */
 /*{
     path: "/videos",
     name: "Videos Reçus",

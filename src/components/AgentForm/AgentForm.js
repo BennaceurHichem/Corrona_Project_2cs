@@ -19,7 +19,7 @@ import Grid from "@material-ui/core/Grid";
 import FormControl from '@material-ui/core/FormControl';
 import { Box } from '@material-ui/core'
 
-import wilayas from "./wilayas_api.json";
+import wilayas from "../../wilayas_api.json";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import { get } from 'lodash'   
 import Table from 'components/Table/Table'
