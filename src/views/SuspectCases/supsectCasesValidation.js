@@ -64,7 +64,7 @@ export default class supsectCasesValidation extends Component {
             this.state.suspectedCases.map(item=>{
                 return (
                   
-                    <CardSuspectCase id={item.id} date={item.date} isTreated={item.is_treated} town={item.town} image={item.attachment.file_url}     />           
+                    <CardSuspectCase key={item.id} id={item.id} date={item.date} isTreated={item.is_treated} town={item.town} image={item.attachment.file_url}     />           
 
             
                     

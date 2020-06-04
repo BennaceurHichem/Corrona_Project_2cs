@@ -10,6 +10,7 @@ import Typography from '@material-ui/core/Typography';
 import wilayas from "../../wilayas_api.json";
 import API from '../../api'
 import Box from "@material-ui/core/Box";
+import emailjs from 'emailjs-com';
 
 const useStyles = makeStyles({
   root: {
@@ -38,7 +39,18 @@ Convert wilaya id(code) to the specific srting
     return wilayas.filter(i=>i.code===id)[0].name
   }
 
+  const  sendEmail = (e)=> {
+    e.preventDefault();
 
+    emailjs.sendForm('corrona_watch', 'template_tsJRJGAm', e.target, 'user_ZhRyO8iRI7txG0nQXJQFE')
+      .then((result) => {
+          console.log(result.text);
+          alert("لقد تم إرسال الإيمايل بنجاح")
+      }, (error) => {
+          console.log(error.text);
+          alert("ERROR")
+      });
+  }
 
   const classes = useStyles();
 
@@ -66,7 +78,7 @@ Convert wilaya id(code) to the specific srting
      
      }).catch(err=>{
      alert("ERROR WHILE UPDATING ARTICLE ! "+err)
-     
+     setShowButtons(false)
      })
          
 
@@ -99,11 +111,12 @@ Convert wilaya id(code) to the specific srting
       <CardActions>
       <Box justify-content="center" margin="auto">
 
-      {!props.isTreated &&
-
-            <Button size="large" color="primary" className={classes.btn} onClick={e=>handleCaseValidation(e)}>
+      {!props.isTreated &&showButtons&& 
+        <form className="contact-form" onSubmit={(e)=>sendEmail(e)}>
+            <Button type="submit" size="large" color="primary" className={classes.btn} onClick={e=>handleCaseValidation(e)}>
                 تأكيد الحالة ✅
             </Button>
+            </form>
           
      }
       
