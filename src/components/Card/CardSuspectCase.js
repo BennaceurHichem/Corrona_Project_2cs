@@ -48,6 +48,7 @@ Convert wilaya id(code) to the specific srting
           alert("لقد تم إرسال الإيمايل بنجاح")
       }, (error) => {
           console.log(error.text);
+          
           alert("ERROR")
       });
   }
@@ -104,7 +105,7 @@ Convert wilaya id(code) to the specific srting
           </Typography>
           <Typography variant="body2" color="textSecondary" component="p">
           
-                {!props.isTreated? "الحالة لم يتم تأكيدها بعد":"حالة تم تأكيدها"}
+                {!props.isTreated &&showButtons ? "الحالة لم يتم تأكيدها بعد":"حالة تم تأكيدها"}
           </Typography>
         </CardContent>
       </CardActionArea>

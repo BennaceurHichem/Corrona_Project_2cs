@@ -69,6 +69,7 @@
     "react-swipeable-views": "0.13.3",
     "react-timestamp": "^5.1.0",
     "react-top-loading-bar": "^1.2.0",
+    "react-youtube": "^7.11.2",
     "suneditor-react": "^2.10.0",
     "yup": "^0.28.3"
   },
