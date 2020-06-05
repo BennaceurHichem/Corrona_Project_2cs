@@ -39,8 +39,9 @@ const styles = {
  function CardVideo(props) {
   const useStyles = makeStyles(theme => ({
     root: {
-      maxWidth: props.maxWidth ? props.maxWidth : "400",
-      margin: "auto"
+      maxWidth: 400,
+      marginTop:20,
+      marginBottom:20,
     },
     expand: {
       transform: "rotate(0deg)",

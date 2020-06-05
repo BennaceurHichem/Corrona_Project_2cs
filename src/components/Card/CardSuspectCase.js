@@ -14,7 +14,9 @@ import emailjs from 'emailjs-com';
 
 const useStyles = makeStyles({
   root: {
-    maxWidth: 345,
+    maxWidth: 400,
+    marginTop:20,
+    marginBottom:20,
 
   },
   btn:{

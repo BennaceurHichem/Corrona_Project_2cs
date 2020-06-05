@@ -55,8 +55,8 @@ export default class videosValidation extends Component {
                                   onRef={ref => (this.LoadingBar = ref)}
                               />
 
-<Typography gutterBottom variant="h5" component="h2">
-          this is the supsect case validation      
+<Typography  variant="h3" component="h2">
+        قائمة فيديوهات اليوتوب المتعلقة بكورونا    
 </Typography>
 
         
@@ -65,7 +65,7 @@ export default class videosValidation extends Component {
           this.state.scrappedVideos.filter(item=>!item.is_validated).slice(0,5).sort((a, b)=> new Date(b.published_at)-new Date(a.published_at) ).map(item=>{
               return (
                 
-                  <ScrappedVideoCard key={item.id} id={item.id} videoId={item.video_id}  isValidated={item.is_validated} title={item.title} url={item.video_embed_url}  channel={item.channel_title}   date={item.published_at} />           
+                  <ScrappedVideoCard key={item.id} id={item.id} decription={item.description} videoId={item.video_id}  isValidated={item.is_validated} title={item.title} url={item.video_embed_url}  channel={item.channel_title}   date={item.published_at} />           
 
           
                   

@@ -22,7 +22,7 @@ import defaultImage from 'assets/img/not_found.png'
 import LoadingBar from 'react-top-loading-bar';
 import ReactHtmlParser from 'react-html-parser'
 import { withStyles } from '@material-ui/core/styles';
-
+import PaginationList from 'react-pagination-list';
 import YouTube from 'react-youtube';
 
 import API from '../../api'
@@ -48,8 +48,9 @@ const styles = {
  export default function ScrappedVideoCard(props) {
   const useStyles = makeStyles(theme => ({
     root: {
-      maxWidth: props.maxWidth ? props.maxWidth : "400",
-      margin: "auto"
+      maxWidth: 400,
+      marginTop:20,
+      marginBottom:20,
     },
     expand: {
       transform: "rotate(0deg)",
@@ -62,7 +63,7 @@ const styles = {
       transform: "rotate(180deg)"
     },
     btn:{
-      marginRight:"30px"
+      marginRight:"10px"
     }
   }));
 
@@ -119,7 +120,7 @@ alert("خلل في تأكيد الفيديو ! "+err)
       <CardActionArea>
       <ReactPlayer
           width="100%"
-          height="100%"
+          height="300px"
           url={
             url
               ? url
@@ -149,7 +150,7 @@ alert("خلل في تأكيد الفيديو ! "+err)
               <>
             {!isValidated && 
             <>
-              <Button className={classes.btn} onClick={e=>handleValidation(e)} size="small" style={{margin:"30px"}}>
+              <Button className={classes.btn} onClick={e=>handleValidation(e)} size="small">
                 <CheckIcon style={{ color: green[500],margin:"30px" }}></CheckIcon>
                 قبول الفيديو
               </Button>
@@ -180,9 +181,9 @@ alert("خلل في تأكيد الفيديو ! "+err)
             component="p"
             style={{ position: "inherit" }}
           >
-            {description
+            {props.description
               ? 
-              ReactHtmlParser(description)
+              ReactHtmlParser(props.description)
               : " وصف الفيديو "}
           </Typography>
          
