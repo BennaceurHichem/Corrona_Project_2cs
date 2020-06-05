@@ -5,7 +5,7 @@ import ScrappedVideoCard from '../../components/Card/ScrappedVideoCard'
 import { Typography,Grid,Row } from '@material-ui/core';
 import PaginationList from 'react-pagination-list';
 
-export default class videosValidation extends Component {
+export default class videosNoValidated extends Component {
 
 
 
@@ -66,7 +66,7 @@ export default class videosValidation extends Component {
  
           <div style={{display: 'flex', justifyContent: 'center'}}>
                 <PaginationList 
-                    data={this.state.scrappedVideos.filter(item=>item.is_validated).sort((a, b)=> new Date(b.published_at)-new Date(a.published_at) )}
+                    data={this.state.scrappedVideos.filter(item=>!item.is_validated).sort((a, b)=> new Date(b.published_at)-new Date(a.published_at) )}
                     pageSize={3}
                     renderItem={(item, key) => (
                        

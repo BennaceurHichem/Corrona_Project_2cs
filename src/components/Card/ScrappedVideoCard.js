@@ -1,5 +1,4 @@
-import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
+import React, { useState,useEffect } from 'react';import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardActionArea from "@material-ui/core/CardActionArea";
 import CardActions from "@material-ui/core/CardActions";
@@ -69,6 +68,14 @@ const styles = {
 
   const [expanded, setExpanded] = React.useState(false);
   const [showButtons, setShowButtons] = React.useState(true)
+  const [isValider, setisValider] = React.useState(true)
+
+
+
+  /*useEffect(() => {
+    setisValider(props.isValidated);
+  }, [props.isValidated]);
+*/
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
@@ -109,7 +116,35 @@ alert("خلل في تأكيد الفيديو ! "+err)
 })
     
   }
- 
+  const handleInValidation = (e)=>{
+  
+    const updateVideo = `scrapers/youtube/validate/${id}`
+    const data ={
+      id:props.id,
+      is_validated:false,
+    }
+  
+   API.put(updateVideo,
+       
+     data
+   ,{
+   headers:{
+     Authorization:'Basic YWRtaW46YWRtaW4=',
+   
+     'Accept': 'application/json',
+     'Content-Type': 'application/json',
+   }
+  }).then(res=>{
+    setShowButtons(false)
+    alert("تم رفض الفيديو بنجاح ! ")
+  
+  }).catch(err=>{
+  alert("خلل في تأكيد الفيديو ! "+err)
+  
+  })
+      
+    }
+   
   return (
 
   
@@ -136,7 +171,7 @@ alert("خلل في تأكيد الفيديو ! "+err)
           <Typography variant="h6"
             color="textSecondary"
             component="h6"
-            style={{ position: "inherit" }}>{date? date:"تاريخ الكتابة غير متوفر "}</Typography>
+            style={{ position: "inherit" }}>{date? new Intl.DateTimeFormat('en-US', {year: 'numeric', month: '2-digit',day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit'}).format(new Date(date)):"تاريخ الكتابة غير متوفر "}</Typography>
              <Typography variant="h6"
             color="textSecondary"
             component="h6"
@@ -148,11 +183,20 @@ alert("خلل في تأكيد الفيديو ! "+err)
         <Box justify-content="center" margin="auto">
           {showButtons &&
               <>
-            {!isValidated && 
+            {!isValidated &&  
             <>
               <Button className={classes.btn} onClick={e=>handleValidation(e)} size="small">
                 <CheckIcon style={{ color: green[500],margin:"30px" }}></CheckIcon>
                 قبول الفيديو
+              </Button>
+       
+                </>
+            }
+            {isValidated && 
+            <>
+              <Button className={classes.btn} onClick={e=>handleInValidation(e)} size="small">
+              <CloseIcon style={{ color: red[500] }}></CloseIcon>
+                رفض الفيديو
               </Button>
        
                 </>

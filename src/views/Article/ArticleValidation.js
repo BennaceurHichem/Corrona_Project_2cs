@@ -109,7 +109,7 @@ componentDidMount(){
                         
 
                     return(
-                        <Grid>
+                        <Grid align="center">
 
                                     <LoadingBar
                                     height={3}

@@ -49,7 +49,10 @@ import CreateIcon from '@material-ui/icons/Create';
 import AssignmentTurnedInIcon from '@material-ui/icons/AssignmentTurnedIn';
 import AddLocationIcon from '@material-ui/icons/AddLocation';
 import supsectCasesValidation from 'views/SuspectCases/supsectCasesValidation'
+import supsectCasesNoValidated from 'views/SuspectCases/supsectCasesNoValidated'
 import videosValidation from 'views/videosValidation/videosValidation'
+import videosNoValidated from 'views/videosValidation/videosNoValidated'
+
 const dashboardRoutes = [
   {
     path: "/dashboard",
@@ -73,7 +76,7 @@ const dashboardRoutes = [
   },
   {
     path: "/casesvalidation",
-    name: "Validation des Cas suspects ",
+    name: "Cas suspects validées",
     rtlName:" قبول الحالات المطروحة ",
     icon: AddLocationIcon,
     component: supsectCasesValidation,
@@ -82,11 +85,31 @@ const dashboardRoutes = [
 
   },
   {
-    path: "/videosvalidation",
-    name: "Validation des Videos ",
-    rtlName:" قبول الفيديوهات ",
+    path: "/casesnonvalide",
+    name: "Cas suspects non validèe ",
+    rtlName:" قبول الحالات المطروحة ",
+    icon: AddLocationIcon,
+    component: supsectCasesNoValidated,
+    layout: "/admin",
+    user:"admin"
+
+  },
+  {
+    path: "/videosvalide",
+    name: "Videos Validè  ",
+    rtlName:"  الفيديوهات المقبولة ",
     icon: TheatersIcon,
     component: videosValidation,
+    layout: "/admin",
+    user:"admin"
+
+  },
+  {
+    path: "/videosnonvalide",
+    name: "Videos Non Validè ",
+    rtlName:"  الفيديوهات الغير معالجة  ",
+    icon: TheatersIcon,
+    component: videosNoValidated,
     layout: "/admin",
     user:"admin"
 
