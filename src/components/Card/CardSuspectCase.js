@@ -88,8 +88,6 @@ Convert wilaya id(code) to the specific srting
 
   }
 
-
-
   return (
     <Card className={classes.root}>
       <CardActionArea>

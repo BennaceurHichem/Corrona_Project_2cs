@@ -2,10 +2,12 @@ import React, { Component } from 'react'
 import API from '../../api'
 import LoadingBar from 'react-top-loading-bar';
 import ScrappedVideoCard from '../../components/Card/ScrappedVideoCard'
+import UserCardVideo from '../../components/Card/UserCardVideo'
+
 import { Typography,Grid,Row } from '@material-ui/core';
 import PaginationList from 'react-pagination-list';
 
-export default class videosNoValidated extends Component {
+export default class videosValidation extends Component {
 
 
 
@@ -14,7 +16,7 @@ export default class videosNoValidated extends Component {
 
         super(props)
         this.state={
-            scrappedVideos:[],
+            userVideos:[],
             success:false
         }
 
@@ -22,26 +24,25 @@ export default class videosNoValidated extends Component {
     }
 
     componentDidMount(){
-        const suspectedUrl = '/scrapers/youtube/'
+        const userVideosUrl = '/feeds/videos/v2'
     
         this.LoadingBar.continuousStart()
 
-        API.get(suspectedUrl,
+        API.get(userVideosUrl,
             {
             headers:{
-                          'Accept': 'application/json',
+              'Accept': 'application/json',
               'Content-Type': 'application/json;charset=utf-8',
             }
           }).then((res)=>{
-            this.LoadingBar.complete()
+             this.LoadingBar.complete()
               
               this.setState({
-                  scrappedVideos:res.data,
+                  userVideos:res.data,
                   success:true
               })
               
           }).catch((err)=>{
-            this.LoadingBar.complete()
             alert(err)
           })
 
@@ -58,19 +59,20 @@ export default class videosNoValidated extends Component {
                               />
 
                 <Typography  variant="h3" component="h2">
-                        قائمة فيديوهات اليوتوب المتعلقة بكورونا    
+                        قائمة فيديوهات المستخدمين    
                 </Typography>
 
         
           <Grid align="center">
  
           <div style={{display: 'flex', justifyContent: 'center'}}>
+                {this.state.userVideos===null && <p>No videos Found</p>}
                 <PaginationList 
-                    data={this.state.scrappedVideos.filter(item=>!item.is_validated).sort((a, b)=> new Date(b.published_at)-new Date(a.published_at) )}
+                    data={this.state.userVideos.filter(item=>!item.is_validated).sort((a, b)=> new Date(b.publication_date)-new Date(a.publication_date) )}
                     pageSize={3}
                     renderItem={(item, key) => (
                        
-                             <ScrappedVideoCard style={{ marginLeft: "auto", marginRight: "auto"}} key={item.id} id={item.id} decription={item.description} videoId={item.video_id}  isValidated={item.is_validated} title={item.title} url={item.video_embed_url}  channel={item.channel_title}   date={item.published_at} />               
+                             <UserCardVideo style={{ marginLeft: "auto", marginRight: "auto"}} key={item.id} id={item.id} decription={item.description} videoId={item.attachment.id}  isValidated={item.is_validated} isDeleted={item.is_deleted} title={item.title} url={item.attachment.file_url}     date={item.publication_date} />               
                        
  
                              )}

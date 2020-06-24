@@ -50,8 +50,11 @@ import AssignmentTurnedInIcon from '@material-ui/icons/AssignmentTurnedIn';
 import AddLocationIcon from '@material-ui/icons/AddLocation';
 import supsectCasesValidation from 'views/SuspectCases/supsectCasesValidation'
 import supsectCasesNoValidated from 'views/SuspectCases/supsectCasesNoValidated'
+
 import videosValidation from 'views/videosValidation/videosValidation'
 import videosNoValidated from 'views/videosValidation/videosNoValidated'
+import userVideosValidation from 'views/userVideos/userVideosValidation'
+
 
 const dashboardRoutes = [
   {
@@ -90,6 +93,16 @@ const dashboardRoutes = [
     rtlName:" قبول الحالات المطروحة ",
     icon: AddLocationIcon,
     component: supsectCasesNoValidated,
+    layout: "/admin",
+    user:"admin"
+
+  },
+  {
+    path: "/uservideos",
+    name: "User Videos",
+    rtlName:"فيديوهات المستخدمين ",
+    icon: TheatersIcon,
+    component: userVideosValidation,
     layout: "/admin",
     user:"admin"
 

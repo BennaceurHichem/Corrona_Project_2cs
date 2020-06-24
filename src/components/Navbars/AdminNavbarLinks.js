@@ -69,7 +69,7 @@ export default function AdminNavbarLinks() {
         color={window.innerWidth > 959 ? "transparent" : "white"}
         justIcon={window.innerWidth > 959}
         simple={!(window.innerWidth > 959)}
-        aria-label="Dashboard"
+        aria-label="Moderateur Dashboard"
         className={classes.buttonLink}
       >
         <Dashboard className={classes.icons} />
