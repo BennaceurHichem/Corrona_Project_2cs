@@ -81,10 +81,10 @@ const styles = {
 
  const handleInValidation = (e)=>{
   
-  const updateVideo = `feeds/videos/v2/${id}`
+  const updateVideo = `feeds/publications/validate/${id}`
   const data ={
     id:props.id,
-    is_validated:true,
+   
   }
 
  API.post(updateVideo,
@@ -109,12 +109,10 @@ alert("خلل في تأكيد الفيديو ! "+err)
   }
   const handleValidation = (e)=>{
   
-    const updateVideo = `feeds/videos/update/${id}`
+    const updateVideo = `feeds/publications/validate/${id}`
     const data ={
       id:props.id,
-      is_validated:true,
-      title:title,
-      description:description
+ 
     
     }
   
@@ -130,7 +128,7 @@ alert("خلل في تأكيد الفيديو ! "+err)
    }
   }).then(res=>{
     setShowButtons(false)
-    alert("تم رفض الفيديو بنجاح ! ")
+    alert("تم قبول الفيديو بنجاح ! ")
   
   }).catch(err=>{
   alert("خلل في تأكيد الفيديو ! "+err)
@@ -188,7 +186,7 @@ alert("خلل في تأكيد الفيديو ! "+err)
             }
             {isValidated && 
             <>
-              <Button className={classes.btn} onClick={e=>handleInValidation(e)} size="small">
+              <Button className={classes.btn} onClick={e=>handleValidation(e)} size="small">
               <CloseIcon style={{ color: red[500] }}></CloseIcon>
                 رفض الفيديو
               </Button>

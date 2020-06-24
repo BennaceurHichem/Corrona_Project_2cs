@@ -68,7 +68,7 @@ export default class videosValidation extends Component {
           <div style={{display: 'flex', justifyContent: 'center'}}>
                 {this.state.userVideos===null && <p>No videos Found</p>}
                 <PaginationList 
-                    data={this.state.userVideos.filter(item=>!item.is_validated).sort((a, b)=> new Date(b.publication_date)-new Date(a.publication_date) )}
+                    data={this.state.userVideos.sort((a, b)=> new Date(b.publication_date)-new Date(a.publication_date) )}
                     pageSize={3}
                     renderItem={(item, key) => (
                        
