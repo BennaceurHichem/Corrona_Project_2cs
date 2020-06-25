@@ -55,6 +55,7 @@ import videosValidation from 'views/videosValidation/videosValidation'
 import videosNoValidated from 'views/videosValidation/videosNoValidated'
 import userVideosValidation from 'views/userVideos/userVideosValidation'
 import UsersList from 'views/UsersList/UsersList'
+import GroupIcon from '@material-ui/icons/Group';
 
 const dashboardRoutes = [
   {
@@ -101,7 +102,7 @@ const dashboardRoutes = [
     path: "/uservideos",
     name: "User Videos",
     rtlName:"فيديوهات المستخدمين ",
-    icon: TheatersIcon,
+    icon: VideoLibraryIcon,
     component: userVideosValidation,
     layout: "/admin",
     user:"admin"
@@ -131,7 +132,7 @@ const dashboardRoutes = [
     path: "/users",
     name: "Users List ",
     rtlName:"  الفيديوهات الغير معالجة  ",
-    icon: TheatersIcon,
+    icon: GroupIcon,
     component: UsersList,
     layout: "/admin",
     user:"admin"

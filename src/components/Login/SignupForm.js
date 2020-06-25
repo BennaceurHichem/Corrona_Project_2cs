@@ -71,7 +71,7 @@ export default function SignupForm(props) {
           poste: ""
         }}
         validationSchema={Yup.object().shape({
-          fullname: Yup.string().required("please fill your full name "),
+          fullname: Yup.string().required(""),
 
           email: Yup.string()
             .email("Email is invalid")
@@ -243,3 +243,6 @@ console.log("fields: "+"email:"+fields.email+"role"+fields.poste+
     );
   }
 }
+
+
+
