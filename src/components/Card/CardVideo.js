@@ -86,7 +86,6 @@ const styles = {
    data
  ,{
  headers:{
-   Authorization:'Basic YWRtaW46YWRtaW4=',
  
    'Accept': 'application/json',
    'Content-Type': 'application/json;charset=utf-8',
@@ -118,7 +117,6 @@ alert("ERROR WHILE UPDATING ARTICLE ! "+err)
      data
    ,{
    headers:{
-     Authorization:'Basic YWRtaW46YWRtaW4=',
    
      'Accept': 'application/json',
      'Content-Type': 'application/json;charset=utf-8',

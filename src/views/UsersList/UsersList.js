@@ -28,6 +28,8 @@ import Typography from "@material-ui/core/Typography";
 import axios from 'axios'
 import LoadingBar from 'react-top-loading-bar';
 
+import SignupForm  from "components/Login/SignupForm.js";
+
 
 //API call 
 import API from '../../api';
@@ -117,7 +119,6 @@ const usersUrl = 'users/'
         patchData
       ,{
       headers:{
-        Authorization:'Basic YWRtaW46YWRtaW4=',
       
         'Accept': 'application/json',
         'Content-Type': 'application/json;charset=utf-8',
@@ -143,7 +144,7 @@ const usersUrl = 'users/'
       <Box p={1} >
 
       <Typography component="h1" variant="h4" color="black"  gutterBottom="true">
-                  Liste de toutes le sutilisateurs
+                  Liste de touts les utilisateurs
             </Typography>
             
 
@@ -224,7 +225,7 @@ const usersUrl = 'users/'
       </Box>
       </Box>
       
-     
+     <SignupForm  title="Ajouter un utilisateur "/>
       </div>
     );
   }

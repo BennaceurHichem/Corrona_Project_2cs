@@ -107,7 +107,6 @@ class Editor extends React.Component{
         fd
       ,{
       headers:{
-        Authorization:'Basic '+token,
         Accept: "application/json"
       }
     }).then((res)=>{

@@ -41,7 +41,7 @@ export default class videosNoValidated extends Component {
               })
               
           }).catch((err)=>{
-            this.LoadingBar.complete()
+            
             alert(err)
           })
 

@@ -207,7 +207,13 @@ export default function AdminNavbarLinks() {
                     </MenuItem>
                     <Divider light />
                     <MenuItem
-                      onClick={()=>history.push('/login')}
+                      onClick={()=>{
+                        localStorage.removeItem("data")
+                        localStorage.removeItem("token")
+
+                        history.push('/login')
+                        
+                      }}
                       className={classes.dropdownItem}
                     >
                       Logout

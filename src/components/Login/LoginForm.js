@@ -110,19 +110,30 @@ export default function LoginForm() {
      
      data
    ,{
-   headers:{
-     Authorization:'Basic YWRtaW46YWRtaW4=',
-   
-     'Accept': 'application/json',
-     'Content-Type': 'application/json',
-
-   }
+ 
   }).then(res=>{
     console.log(res)
-    localStorage.setItem('user', res)
-    localStorage.setItem('user', res.token)
+    localStorage.setItem('data', res.data)
+    localStorage.setItem('token', res.data.token)
 
-    alert("تم قبول الفيديو بنجاح ! ")
+    const role  =res.data.role
+    const token  = res.data.token
+    
+     console.log("role: "+role)
+     if(role==="moderator") {
+            history.push('/admin/dashboard')
+          }    
+          else if(role==="editor"){
+            history.push('/redacteur/dashboardredacteur')
+          }    
+          else if(role==="health agent"){
+               history.push('/agent/dashboardagent') 
+          } 
+          else{
+            alert("usr or password not valid")
+          }
+    
+
   
   }).catch(err=>{
   alert("خلل في تأكيد الفيديو ! "+err)

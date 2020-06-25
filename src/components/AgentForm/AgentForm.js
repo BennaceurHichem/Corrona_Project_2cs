@@ -104,7 +104,6 @@ get All Communes from backend   api
   const townsUrl = '/geolocation/towns/'
   return API.get(townsUrl,{
     headers:{
-      Authorization:'Basic YWRtaW46YWRtaW4=',
     
       'Accept': 'application/json',
       'Content-Type': 'application/json;charset=utf-8',
@@ -126,7 +125,6 @@ getWilayas(){
   const url = 'geolocation/states/'
   return API.get(url,{
     headers:{
-      Authorization:'Basic YWRtaW46YWRtaW4=',
     
       'Accept': 'application/json',
       'Content-Type': 'application/json;charset=utf-8',
@@ -274,7 +272,6 @@ Displayed data verify the number_death!==0 && number_cases!==0, only those commu
         patchData
       ,{
       headers:{
-        Authorization:'Basic YWRtaW46YWRtaW4=',
       
         'Accept': 'application/json',
         'Content-Type': 'application/json;charset=utf-8',

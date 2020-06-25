@@ -23,7 +23,7 @@ import { spacing } from "@material-ui/system";
 import { FormikTextField, FormikSelectField } from "formik-material-fields";
 import Icon from "@material-ui/core/Icon";
 import Logo from "assets/img/coronaWatchLogo.png";
-
+import API from '../../api'
 
 //this css file is necessary for the texterror label of material ui to make the message above the textField Directly 
 
@@ -57,13 +57,13 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function SignupForm() {
+export default function SignupForm(props) {
   {
     const classes = useStyles();
     return (
       <Formik
         initialValues={{
-          firstName: "",
+          fullname: "",
 
           email: "",
           password: "",
@@ -85,14 +85,42 @@ export default function SignupForm() {
             .required("")
         })}
         onSubmit={fields => {
-          alert("SUCCESS!! :-)\n\n" + JSON.stringify(fields, null, 4));
+
+console.log("fields: "+"email:"+fields.email+"role"+fields.poste+
+"username:"+fields.fullname)
+
+            const data={
+              email:fields.email,
+              username:fields.fullname,
+              password: fields.password,
+              role:fields.poste
+            }
+          
+          API.post('users/new-user',
+     
+                  data
+   ,{
+   headers:{
+   
+     'Accept': 'application/json',
+     'Content-Type': 'application/json',
+   }
+  }).then(res=>{
+    alert("تم إضافة المستخدم بنحاج ! ")
+  
+  }).catch(err=>{
+  alert("خلل في  إضافة المستخدم ! "+err)
+  
+  })
+
+
         }}
         render={({ status, touched, errors }) => (
           <div className={classes.paper}>
            
 
             <Typography component="h1" variant="h5">
-              Sign in
+              {props.title}
             </Typography>
 
 
@@ -115,7 +143,7 @@ export default function SignupForm() {
                       margin="normal"
                       id="fullname"
 
-                      autoComplete="firstName"
+                      autoComplete="fullname"
                       variant="outlined"
                       error={false}
                       helperText=""
@@ -174,9 +202,9 @@ export default function SignupForm() {
                     <FormikSelectField
                       name="poste"
                       options={[
-                        { label: "moderateur", value: "moderateur" },
-                        { label: "redacteur", value: "redacteur" },
-                        { label: "agent_sante", value: "agent_sante" }
+                        { label: "moderator", value: "moderator" },
+                        { label: "health agent", value: "health agent" },
+                        { label: "editor", value: "editor" }
                       ]}
                       label="Poste"
                       id="poste"

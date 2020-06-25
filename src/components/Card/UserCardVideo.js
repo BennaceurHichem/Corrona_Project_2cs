@@ -92,7 +92,6 @@ const styles = {
    data
  ,{
  headers:{
-   Authorization:'Basic YWRtaW46YWRtaW4=',
  
    'Accept': 'application/json',
    'Content-Type': 'application/json',
@@ -121,7 +120,6 @@ alert("خلل في تأكيد الفيديو ! "+err)
      data
    ,{
    headers:{
-     Authorization:'Basic YWRtaW46YWRtaW4=',
    
      'Accept': 'application/json',
      'Content-Type': 'application/json',

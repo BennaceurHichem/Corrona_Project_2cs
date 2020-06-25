@@ -78,7 +78,6 @@ componentDidMount(){
     API.get(articlesURL,
       {
       headers:{
-        Authorization:'Basic YWRtaW46YWRtaW4=',
       
         'Accept': 'application/json',
         'Content-Type': 'application/json;charset=utf-8',
