@@ -41,7 +41,6 @@ export default class videosValidation extends Component {
               })
               
           }).catch((err)=>{
-            this.LoadingBar.complete()
             alert(err)
           })
 

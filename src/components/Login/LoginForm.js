@@ -23,6 +23,7 @@ import { spacing } from "@material-ui/system";
 import { FormikTextField, FormikSelectField } from "formik-material-fields";
 import Icon from "@material-ui/core/Icon";
 import Logo from "assets/img/coronaWatchLogo.png";
+import API from "../../api"
 import {
   BrowserRouter as Router,
   Switch,
@@ -58,10 +59,10 @@ const useStyles = makeStyles(theme => ({
   customtextField: {
     variant: "outlined",
     margin: "normal",
-    id: "email",
-    label: "Email Address",
-    name: "email",
-    autoComplete: "email"
+    id: "username",
+    label: "username Address",
+    name: "username",
+    autoComplete: "username"
   }
 }));
 
@@ -71,13 +72,12 @@ export default function LoginForm() {
     return (
       <Formik
         initialValues={{
-          email: "",
+          username: "",
           password: ""
         }}
         validationSchema={Yup.object().shape({
-          email: Yup.string()
-            .email("Email is invalid")
-            .required(""),
+          username: Yup.string()
+            ,
 
           password: Yup.string()
            
@@ -85,21 +85,49 @@ export default function LoginForm() {
         })}
         onSubmit={fields => {
           //alert("SUCCESS!! :-)\n\n" + JSON.stringify(fields, null, 4));
-          const email  = fields.email
+          const username  = fields.username
           const password = fields.password
 
-          if(email==="admin@corronawatch.com" && password ==="rootroot") {
+         /* if(username==="admin@corronawatch.com" && password ==="rootroot") {
             history.push('/admin/dashboard')
           }    
-          else if(email==="redacteur@corronawatch.com"){
+          else if(username==="redacteur@corronawatch.com"){
             history.push('/redacteur/dashboardredacteur')
           }    
-          else if(email==="agent@corronawatch.com"){
+          else if(username==="agent@corronawatch.com"){
                history.push('/agent/dashboardagent') 
           } 
           else{
             alert("usr or password not valid")
           }
+              */
+
+          const data={
+            username: username,
+            password : password
+          }
+          API.post('users/api-token-auth',
+     
+     data
+   ,{
+   headers:{
+     Authorization:'Basic YWRtaW46YWRtaW4=',
+   
+     'Accept': 'application/json',
+     'Content-Type': 'application/json',
+
+   }
+  }).then(res=>{
+    console.log(res)
+    localStorage.setItem('user', res)
+    localStorage.setItem('user', res.token)
+
+    alert("تم قبول الفيديو بنجاح ! ")
+  
+  }).catch(err=>{
+  alert("خلل في تأكيد الفيديو ! "+err)
+  
+  })
 
         }}
         render={({ status, touched, errors }) => (
@@ -120,14 +148,14 @@ export default function LoginForm() {
                   <div className="form-group">
                     <FormikTextField
                       as={TextField}
-                      name="email"
+                      name="username"
                       type="text"
                       variant="outlined"
                       margin="normal"
                       required
-                      id="email"
-                      label="Email Address"
-                      autoComplete="email"
+                      id="username"
+                      label="username Address"
+                      autoComplete="username"
                       autoFocus
                     />
                   </div>

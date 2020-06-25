@@ -54,7 +54,7 @@ import supsectCasesNoValidated from 'views/SuspectCases/supsectCasesNoValidated'
 import videosValidation from 'views/videosValidation/videosValidation'
 import videosNoValidated from 'views/videosValidation/videosNoValidated'
 import userVideosValidation from 'views/userVideos/userVideosValidation'
-
+import UsersList from 'views/UsersList/UsersList'
 
 const dashboardRoutes = [
   {
@@ -123,6 +123,16 @@ const dashboardRoutes = [
     rtlName:"  الفيديوهات الغير معالجة  ",
     icon: TheatersIcon,
     component: videosNoValidated,
+    layout: "/admin",
+    user:"admin"
+
+  },
+  {
+    path: "/users",
+    name: "Users List ",
+    rtlName:"  الفيديوهات الغير معالجة  ",
+    icon: TheatersIcon,
+    component: UsersList,
     layout: "/admin",
     user:"admin"
 
