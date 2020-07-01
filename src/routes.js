@@ -52,6 +52,7 @@ import supsectCasesValidation from 'views/SuspectCases/supsectCasesValidation'
 import supsectCasesNoValidated from 'views/SuspectCases/supsectCasesNoValidated'
 
 import videosValidation from 'views/videosValidation/videosValidation'
+import userCommentsValidation from 'views/userCommentsValidation/userCommentsValidation'
 import videosNoValidated from 'views/videosValidation/videosNoValidated'
 import userVideosValidation from 'views/userVideos/userVideosValidation'
 import UsersList from 'views/UsersList/UsersList'
@@ -104,6 +105,16 @@ const dashboardRoutes = [
     rtlName:"فيديوهات المستخدمين ",
     icon: VideoLibraryIcon,
     component: userVideosValidation,
+    layout: "/admin",
+    user:"admin"
+
+  },
+  {
+    path: "/usercomment",
+    name: "User comments",
+    rtlName:"تعليقات المستخدمين ",
+    icon: VideoLibraryIcon,
+    component: userCommentsValidation,
     layout: "/admin",
     user:"admin"
 
