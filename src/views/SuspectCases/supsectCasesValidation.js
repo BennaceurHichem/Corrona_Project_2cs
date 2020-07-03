@@ -61,7 +61,7 @@ export default class supsectCasesValidation extends Component {
           
     <Grid align="center">
             {    
-            this.state.suspectedCases.filter(item=>item.is_treated).map(item=>{
+            this.state.suspectedCases.filter(item=>item.is_treated && item.attachment.nom==="image").map(item=>{
                 return (
                   
                     <CardSuspectCase key={item.id} id={item.id} date={item.date} isTreated={item.is_treated} town={item.town} image={item.attachment.file_url}     />           

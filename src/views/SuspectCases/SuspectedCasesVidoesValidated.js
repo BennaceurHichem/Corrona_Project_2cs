@@ -4,7 +4,7 @@ import LoadingBar from 'react-top-loading-bar';
 import CardSuspectCase from '../../components/Card/CardSuspectCase'
 import { Typography,Grid } from '@material-ui/core';
 
-export default class supsectCasesNoValidated extends Component {
+export default class    SupsectCasesVideosValidated extends Component {
 
     constructor(props)
     {   
@@ -55,13 +55,13 @@ export default class supsectCasesNoValidated extends Component {
                                 />
 
 <Typography gutterBottom variant="h5" component="h2">
-         قائمة الحالات المبلغ عنها الغير معالجة      
+         قائمة الفيديوهات المبلغ عنها المقبولة      
 </Typography>
 
           
     <Grid align="center">
             {    
-            this.state.suspectedCases.filter(item=>!item.is_treated && item.attachment.nom==="image").map(item=>{
+            this.state.suspectedCases.filter(item=>item.is_treated && item.attachment.nom==="video").map(item=>{
                 return (
                   
                     <CardSuspectCase key={item.id} id={item.id} date={item.date} isTreated={item.is_treated} town={item.town} image={item.attachment.file_url}     />           

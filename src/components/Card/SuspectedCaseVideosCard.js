@@ -33,11 +33,11 @@ const styles = {
     marginRight:"30px"
   },
   body2:{
-    position: initial,
+    position: "initial",
     width: "100%",
     bottom: "20px",
     fontSize: "12px",
-    color: rgb(0, 0, 0),
+    color: '#0000',
     marginTop: "0px",
   }
 };

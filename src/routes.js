@@ -39,6 +39,7 @@ import RTLPage from "views/RTLPage/RTLPage.js";
 import VideoLibraryIcon from '@material-ui/icons/VideoLibrary';
 import TheatersIcon from '@material-ui/icons/Theaters';
 import VideosList from 'views/VideosList/VideosList'
+import MovieIcon from '@material-ui/icons/Movie';
 //article component 
 import RedactionArticle from 'views/Article/RedactionArticle'
 import ArticleValidation from 'views/Article/ArticleValidation'
@@ -57,9 +58,11 @@ import videosNoValidated from 'views/videosValidation/videosNoValidated'
 import userVideosValidation from 'views/userVideos/userVideosValidation'
 import UsersList from 'views/UsersList/UsersList'
 import GroupIcon from '@material-ui/icons/Group';
+import SuspectedCasesVideosValidated from 'views/SuspectCases/SuspectedCasesVidoesValidated'
+import SuspectedCasesVideosNoValidated from 'views/SuspectCases/SuspectedCasesVidoesNoValidated'
 
 const dashboardRoutes = [
-  {
+  /*{
     path: "/dashboard",
     name: "Dashboard",
     rtlName: "لوحة القيادة",
@@ -67,7 +70,7 @@ const dashboardRoutes = [
     component: DashboardPage,
     layout: "/admin",
     user:"admin"
-  },
+  },*/
 
   {
     path: "/articlevalidation",
@@ -89,12 +92,33 @@ const dashboardRoutes = [
     user:"admin"
 
   },
+
   {
     path: "/casesnonvalide",
     name: "not validated suspected cases ",
     rtlName:" قبول الحالات المطروحة ",
     icon: AddLocationIcon,
     component: supsectCasesNoValidated,
+    layout: "/admin",
+    user:"admin"
+
+  },
+  {
+    path: "/casesvideosvalidated",
+    name: "validated suspected cases videos",
+    rtlName:" قبول فيديوهات الحالات المطروحة ",
+    icon: MovieIcon,
+    component: SuspectedCasesVideosValidated,
+    layout: "/admin",
+    user:"admin"
+
+  },
+  {
+    path: "/casesvideosnovalidated",
+    name: "no validated suspected cases videos",
+    rtlName:" قبول فيديوهات الحالات المطروحة ",
+    icon: MovieIcon,
+    component: SuspectedCasesVideosNoValidated,
     layout: "/admin",
     user:"admin"
 
@@ -109,16 +133,7 @@ const dashboardRoutes = [
     user:"admin"
 
   },
-  {
-    path: "/usercomment",
-    name: "User comments",
-    rtlName:"تعليقات المستخدمين ",
-    icon: VideoLibraryIcon,
-    component: userCommentsValidation,
-    layout: "/admin",
-    user:"admin"
-
-  },
+ 
   {
     path: "/videosvalide",
     name: "robots validated videos",
@@ -149,7 +164,7 @@ const dashboardRoutes = [
     user:"admin"
 
   },
-  {
+  /*{
     path: "/dashboardagent",
     name: "Dashboard Agent",
     rtlName: "لوحة القيادة",
@@ -157,7 +172,7 @@ const dashboardRoutes = [
     component: DashboardAgent,
     layout: "/agent",
     user:"agent"
-  },
+  },*/
   {
     path: "/dataentry",
     name: "Information filling",
@@ -168,37 +183,9 @@ const dashboardRoutes = [
     layout: "/agent",
     user:"agent"
   },
-    /*{
-    path: "/user",
-    name: "User Profile",
-    rtlName: "ملف تعريفي للمستخدم",
-    icon: Person,
-    component: UserProfile,
-    layout: "/admin",
-    user:"admin"
-  },*/
-/*{
-    path: "/videos",
-    name: "Videos Reçus",
-    rtlName:" الفيديوهات ",
-    icon: TheatersIcon,
-    component: VideosList,
-    layout: "/admin",
-    user:"admin"
-  },
-  */
-/*{
-    path: "/videos",
-    name: "Videos Reçus",
-    rtlName:" الفيديوهات ",
-    icon: TheatersIcon,
-    component: VideosList,
-    layout: "/admin",
-    user:"admin"
-  },
-  */
 
-  {
+
+  /*{
     path: "/dashboardredacteur",
     name: "Dashboard Redacteur",
     rtlName: "لوحة القيادة",
@@ -208,6 +195,7 @@ const dashboardRoutes = [
     user:"redacteur",
     
   },
+  */
 
   {
     path: "/writearticle",
@@ -220,47 +208,6 @@ const dashboardRoutes = [
     
   },
   
-  /*{
-    path: "/createarticle",
-    name: "Redaction article",
-    rtlName: "كتابة المقال",
-    icon: Dashboard,
-    //need to create a component for creating article 
-    component: DashboardRedacteur,
-    layout: "/redacteur",
-    user:"redacteur"
-  },*/
-
-
-
-
-
-
-
-  /*{
-    path: "/typography",
-    name: "Typography",
-    rtlName: "الخطوط",
-    icon: LibraryBooks,
-    component: Typography,
-    layout: "/admin"
-  },*/
- /* {
-    path: "/icons",
-    name: "Icons",
-    rtlName: "الرموز",
-    icon: BubbleChart,
-    component: Icons,
-    layout: "/admin"
-  },*/
-  /*{
-    path: "/maps",
-    name: "Maps",
-    rtlName: "خرائط",
-    icon: LocationOn,
-    component: Maps,
-    layout: "/admin"
-  }*/,
   {
     path: "/notifications",
     name: "Notifications",
@@ -269,23 +216,7 @@ const dashboardRoutes = [
     component: NotificationsPage,
     layout: "/admin"
   },
-  /*{
-    path: "/rtl-page",
-    name: "RTL Support",
-    rtlName: "دعم اللغة العربية ",
-    icon: Language,
-    component: RTLPage,
-    layout: "/rtl"
-  },*/
- /* {
-    path: "/upgrade-to-pro",
-    name: "Upgrade To PRO",
-    rtlName: "التطور للاحترافية",
-    icon: Unarchive,
-    component: UpgradeToPro,
-    layout: "/admin"
-  }
-  */
+  
 ];
 
 export default dashboardRoutes;
