@@ -71,7 +71,7 @@ const dashboardRoutes = [
 
   {
     path: "/articlevalidation",
-    name: "Validation des articles ",
+    name: "Articles validation ",
     rtlName:" قبول المقالات ",
     icon: AssignmentTurnedInIcon,
     component: ArticleValidation,
@@ -81,7 +81,7 @@ const dashboardRoutes = [
   },
   {
     path: "/casesvalidation",
-    name: "Cas suspects validées",
+    name: "validated suspected cases",
     rtlName:" قبول الحالات المطروحة ",
     icon: AddLocationIcon,
     component: supsectCasesValidation,
@@ -91,7 +91,7 @@ const dashboardRoutes = [
   },
   {
     path: "/casesnonvalide",
-    name: "Cas suspects non validèe ",
+    name: "not validated suspected cases ",
     rtlName:" قبول الحالات المطروحة ",
     icon: AddLocationIcon,
     component: supsectCasesNoValidated,
@@ -101,7 +101,7 @@ const dashboardRoutes = [
   },
   {
     path: "/uservideos",
-    name: "User Videos",
+    name: "User added videos",
     rtlName:"فيديوهات المستخدمين ",
     icon: VideoLibraryIcon,
     component: userVideosValidation,
@@ -121,7 +121,7 @@ const dashboardRoutes = [
   },
   {
     path: "/videosvalide",
-    name: "Videos Validè  ",
+    name: "robots validated videos",
     rtlName:"  الفيديوهات المقبولة ",
     icon: TheatersIcon,
     component: videosValidation,
@@ -131,7 +131,7 @@ const dashboardRoutes = [
   },
   {
     path: "/videosnonvalide",
-    name: "Videos Non Validè ",
+    name: "robots not validated videos ",
     rtlName:"  الفيديوهات الغير معالجة  ",
     icon: TheatersIcon,
     component: videosNoValidated,
@@ -160,7 +160,7 @@ const dashboardRoutes = [
   },
   {
     path: "/dataentry",
-    name: "Remplissage d'information",
+    name: "Information filling",
     rtlName: "إدخال المعلومات ",
     icon: Person,
     //need to be changed 

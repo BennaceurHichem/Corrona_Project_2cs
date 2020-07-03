@@ -203,15 +203,6 @@ const usersUrl = 'users/'
         )
            
           
-        }, { title: 'Avatar', field: 'image_url' ,
-        editComponent: props => (
-
-                <img src={props.image_url} />
-
-
-        )
-           
-          
         },
       
       ]}

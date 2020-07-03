@@ -23,7 +23,7 @@ import ReactHtmlParser from 'react-html-parser'
 import { withStyles } from '@material-ui/core/styles';
 import PaginationList from 'react-pagination-list';
 import YouTube from 'react-youtube';
-
+import p from "./p.css"
 import API from '../../api'
 
 //<CardVideo title="corona article" description="Stay aware of the latest information on the COVID-19 outbreak, available on the WHO website and through your national and local public health authority. Most people who become infected experience mild illness and recover, but it can be more severe for others. Take care of your health and protect others by doing the following:" maxWidth="400px"/>
@@ -32,6 +32,14 @@ const styles = {
   btn: {
     marginRight:"30px"
   },
+  body2:{
+    position: initial,
+    width: "100%",
+    bottom: "20px",
+    fontSize: "12px",
+    color: rgb(0, 0, 0),
+    marginTop: "0px",
+  }
 };
 
 

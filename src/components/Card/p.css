@@ -1,0 +1,9 @@
+p.MuiTypography-root .MuiTypography-body2 .MuiTypography-colorTextSecondary {
+    position: initial;
+    width: 100%;
+    bottom: 20px;
+    font-size: 12px;
+    color: rgb(0, 0, 0);
+    box-shadow: hsl(0, 0%, 0%);
+    margin-top: 0px;
+    }

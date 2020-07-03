@@ -24,6 +24,14 @@ const useStyles = makeStyles({
       margin:"auto",
 
       
+  },
+  body2:{
+    position: "initial",
+    width: "100%",
+    bottom: "20px",
+    fontSize: "30sp",
+    marginTop: "0px",
+    color:"#000000"
   }
 });
 
@@ -102,7 +110,7 @@ Convert wilaya id(code) to the specific srting
           <Typography gutterBottom variant="h5" component="h2">
           Daira: { getWilayaStringFromId(props.town)}
           </Typography>
-          <Typography variant="body2" color="textSecondary" component="p">
+          <Typography className={classes.body2} variant="body2" color="textSecondary" style={{postion:"initial"}} >
           
                 {!props.isTreated &&showButtons ? "الحالة لم يتم تأكيدها بعد":"حالة تم تأكيدها"}
           </Typography>
@@ -127,4 +135,6 @@ Convert wilaya id(code) to the specific srting
       </CardActions>
     </Card>
   );
+
+
 }
