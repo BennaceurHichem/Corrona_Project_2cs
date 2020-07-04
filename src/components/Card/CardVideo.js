@@ -173,14 +173,11 @@ alert("ERROR WHILE UPDATING ARTICLE ! "+err)
               <>
             {!isValidated && !isDeleted &&
             <>
-              <Button className={classes.btn} onClick={e=>handleValidation(e)} size="small" style={{margin:"30px"}}>
-                <CheckIcon style={{ color: green[500],margin:"30px" }}></CheckIcon>
+              <Button className={classes.btn} onClick={e=>handleValidation(e)} size="small" >
+                <CheckIcon style={{ color: green[500] }}></CheckIcon>
               قبول المقال
               </Button>
-              <Button className={classes.btn} onClick={e=>handleDeletion(e)}size="small">
-                   <CloseIcon style={{ color: red[500] }}></CloseIcon>
-                       رفض المقال
-                  </Button>
+           
                 </>
             }
             {isValidated && !isDeleted &&

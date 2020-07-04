@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import API from '../../api'
 import LoadingBar from 'react-top-loading-bar';
-import CardSuspectCase from '../../components/Card/CardSuspectCase'
+import CardSuspectCaseVideo from '../../components/Card/CardSuspectCaseVideo'
 import { Typography,Grid } from '@material-ui/core';
 
 export default class    SupsectCasesVideosValidated extends Component {
@@ -64,7 +64,7 @@ export default class    SupsectCasesVideosValidated extends Component {
             this.state.suspectedCases.filter(item=>item.is_treated && item.attachment.nom==="video").map(item=>{
                 return (
                   
-                    <CardSuspectCase key={item.id} id={item.id} date={item.date} isTreated={item.is_treated} town={item.town} image={item.attachment.file_url}     />           
+                    <CardSuspectCaseVideo key={item.id} id={item.id} date={item.date} isTreated={item.is_treated} town={item.town} image={item.attachment.file_url}     />           
 
             
                     

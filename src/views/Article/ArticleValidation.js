@@ -95,7 +95,6 @@ componentDidMount(){
     }).catch((err)=>{
 
 
-      alert(err)
     })
 
 

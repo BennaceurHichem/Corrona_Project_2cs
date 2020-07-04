@@ -126,7 +126,7 @@ alert("خلل في تأكيد الفيديو ! "+err)
    }
   }).then(res=>{
     setShowButtons(false)
-    alert("تم قبول الفيديو بنجاح ! ")
+    alert("تمت العملية على  الفيديو بنجاح ! ")
   
   }).catch(err=>{
   alert("خلل في تأكيد الفيديو ! "+err)
